@@ -44,6 +44,10 @@ var landlordInstance = new Vue({
         showMsg : false,
         showMsgModal : false,
         pagination: [],
+
+        vnpayAmount: "",
+        vnpayContent: "",
+        vnpayBank: "",
     },
     created(){
         let previousUrl = document.referrer
@@ -1176,15 +1180,49 @@ var landlordInstance = new Vue({
                 this.requestMomoPayment();
             }
         },
+        checkVnpayAmount() {
+            if (this.vnpayAmount != "" && this.vnpayAmount < 1000 || this.vnpayAmount > 1000000) {
+                document.getElementById("notify_vnPayAmount").innerHTML = "Số tiền phải từ 1.000vnđ -> 1.000.000vnđ.";
+            } else {
+                document.getElementById("notify_vnPayAmount").innerHTML = "Bạn phải nhập số tiền muốn nạp.";
+            }
+            // paymentAmountTxt
+            if (this.vnpayAmount.length == 0 || this.vnpayAmount < 1000 || this.vnpayAmount > 1000000) {
+                document.getElementById("notify_vnPayAmount").classList.remove("invisible");
+                document.getElementById("vnPayAmountTxt").classList.add("border-error");
+            } else {
+                document.getElementById("notify_vnPayAmount").classList.add("invisible");
+                document.getElementById("vnPayAmountTxt").classList.remove("border-error");
+                this.requestVnpayPayment();
+            }
+        },
         requestMomoPayment() {
             fetch("/request-momo-payment", {
                 method: 'POST',
                 body: this.paymentAmount
-            })
-                .then(response => response.json())
+            }).then(response => response.json())
                 .then((data) => {
                     if (data.code == "000") {
                         window.location.href = data.momoPayUrl;
+                    }
+                })
+        },
+        requestVnpayPayment() {
+            let vnpayRequestBody = {
+                'vnpayAmount': this.vnpayAmount,
+                'vnpayContent': this.vnpayContent,
+                'vnpayBank': this.vnpayBank
+            }
+            fetch("/api-request-vnpay-payment", {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+                body: JSON.stringify(vnpayRequestBody),
+            }).then(response => response.json())
+                .then((data) => {
+                    if (data.code == "000") {
+                        window.location.href = data.vnpayUrl;
                     }
                 })
         },
