@@ -51,9 +51,9 @@ var landlordInstance = new Vue({
     },
     created(){
         let previousUrl = document.referrer
+        let query = window.location.search;
+        let url = new URLSearchParams(query);
         if(previousUrl.includes("test-payment.momo.vn") && previousUrl.includes("errorCode=0")){
-            let query = window.location.search;
-            let url = new URLSearchParams(query);
             sessionStorage.setItem("momo-check", "1")
             sessionStorage.setItem("partnerCode", url.get('partnerCode'))
             sessionStorage.setItem("accessKey", url.get('accessKey'))
@@ -62,6 +62,15 @@ var landlordInstance = new Vue({
             sessionStorage.setItem("amount", url.get('amount'))
             sessionStorage.setItem("errorCode", url.get('errorCode'))
             window.location.href = "/nap-tien"
+        } else if(url.get('vnpayCode') !== undefined && url.get('vnpayCode') != null) {
+            if (url.get('vnpayCode') == 000) {
+                modalMessageInstance.message = "Nạp tiền thành công";
+            } else {
+                modalMessageInstance.message = "Nạp tiền không thành công";
+            }
+            modalMessageInstance.title = "Thông báo"
+            modalMessageInstance.showModal()
+            url.delete("vnpayCode")
         }
     },
     beforeMount(){
@@ -103,7 +112,7 @@ var landlordInstance = new Vue({
             let profileUser = document.getElementById("user-manager-content")
             profileUser.classList.add("invisible")
             let notification = JSON.parse(sessionStorage.getItem("notification"))
-            this.getRoomById(notification.roomId)
+            this.getRoomById(notification.rentalRequestNotification.rentalRoom.id)
         }
         else if(this.task == 16){
             let profileUser = document.getElementById("user-manager-content")
@@ -499,7 +508,7 @@ var landlordInstance = new Vue({
                         this.pagination = data.pagination
                         if(this.task == 17){
                             let notification = JSON.parse(sessionStorage.getItem("notification"))
-                            this.getListRequestByRoom(this.listRoomRequest[0], 0, null, notification.requestId)
+                            this.getListRequestByRoom(this.listRoomRequest[0], 0, null, notification.rentalRequestNotification.id)
                         }
                     }
                 }).catch(error => {
@@ -748,7 +757,7 @@ var landlordInstance = new Vue({
                             this.getListRoomByPost(this.selectedPost.id)
                         }else if(this.task == 17){
                             let notification = JSON.parse(sessionStorage.getItem("notification"))
-                            this.getRoomById(notification.roomId)
+                            this.getRoomById(notification.rentalRequestNotification.rentalRoom.id)
                         }
 
                     }
@@ -785,7 +794,7 @@ var landlordInstance = new Vue({
                             this.getListRoomByPost(this.selectedPost.id)
                         }else if(this.task == 17){
                             let notification = JSON.parse(sessionStorage.getItem("notification"))
-                            this.getRoomById(notification.roomId)
+                            this.getRoomById(notification.rentalRequestNotification.rentalRoom.id)
                         }
                     }
                 }).catch(error => {
@@ -944,7 +953,7 @@ var landlordInstance = new Vue({
                             this.getListRoomByPost(this.selectedPost.id)
                         }else if(this.task == 17){
                             let notification = JSON.parse(sessionStorage.getItem("notification"))
-                            this.getRoomById(notification.roomId)
+                            this.getRoomById(notification.rentalRequestNotification.rentalRoom.id)
                         }
                     }
                 }).catch(error => {
@@ -1193,7 +1202,16 @@ var landlordInstance = new Vue({
             } else {
                 document.getElementById("notify_vnPayAmount").classList.add("invisible");
                 document.getElementById("vnPayAmountTxt").classList.remove("border-error");
-                this.requestVnpayPayment();
+                if (this.vnpayContent == null || this.vnpayContent.length == 0) {
+                    document.getElementById("notify_vnPayAmount").innerHTML = "Bạn phải nhập nội dung nạp tiền";
+                    document.getElementById("notify_vnPayAmount").classList.remove("invisible");
+                    document.getElementById("vnPayContentTxt").classList.add("border-error");
+                } else {
+                    document.getElementById("notify_vnPayAmount").classList.add("invisible");
+                    document.getElementById("vnPayContentTxt").classList.remove("border-error");
+                    this.requestVnpayPayment();
+                }
+
             }
         },
         requestMomoPayment() {

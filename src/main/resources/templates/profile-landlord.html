@@ -352,7 +352,7 @@
                                 <th>Ngày giao dịch</th>
                                 <th>Số tiền</th>
                                 <th>Phương thức thanh toán</th>
-                                <th>Momo ID</th>
+                                <th>Số giao dịch VNPAY</th>
                                 <th>Ghi chú</th>
                             </tr>
                             </thead>
@@ -361,7 +361,7 @@
                                 <td v-text="authenticationInstance.formatDate(payment.payDate)"></td>
                                 <td v-text="authenticationInstance.formatNumberToDisplay(payment.amount) + ' VNĐ'"></td>
                                 <td v-text="payment.paymentMethod"></td>
-                                <td v-text="payment.momoId"></td>
+                                <td v-text="payment.paymentTransaction"></td>
                                 <td v-text="payment.note"></td>
                             </tr>
                             </tbody>
@@ -940,44 +940,44 @@
                         <h1 class="title-name uppercase">Nạp tiền</h1>
                     </div>
                     <div class="container payment-container">
+<!--                        <div class="row payment-method">-->
+<!--                            <div class="col-lg-4">-->
+<!--                                <div>-->
+<!--                                    <img class="img-logo-payment"-->
+<!--                                         src="/assets/img/logo/logo-momo.jpg">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-8">-->
+<!--                                <p id="notify_paymentAmount" class="invisible" style="color: red;">-->
+
+<!--                                </p>-->
+<!--                                <div class="fill-information">-->
+<!--                                    <div class="title">-->
+<!--                                        <h4>Số tiền<span class="require-text">*</span></h4>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="input-information">-->
+<!--                                        <input @keypress="removeDot(paymentAmount, 'float', $event)" id="paymentAmountTxt" @input="paymentAmount = $event.target.value" type="text" placeholder="10.000 vnđ"-->
+<!--                                               class="form-input-information rounded-pill border-0 shadow-sm">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="fill-information">-->
+<!--                                    <div class="m-auto" style="width: fit-content">-->
+<!--                                        <button v-on:click="checkPaymentAmount" class="btn">-->
+<!--                                            Thanh Toán-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                        </div>-->
+
                         <div class="row payment-method">
                             <div class="col-lg-4">
                                 <div>
                                     <img class="img-logo-payment"
-                                         src="/assets/img/logo/logo-momo.jpg">
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <p id="notify_paymentAmount" class="invisible" style="color: red;">
-
-                                </p>
-                                <div class="fill-information">
-                                    <div class="title">
-                                        <h4>Số tiền<span class="require-text">*</span></h4>
-                                    </div>
-
-                                    <div class="input-information">
-                                        <input @keypress="removeDot(paymentAmount, 'float', $event)" id="paymentAmountTxt" @input="paymentAmount = $event.target.value" type="text" placeholder="10.000 vnđ"
-                                               class="form-input-information rounded-pill border-0 shadow-sm">
-                                    </div>
-                                </div>
-
-                                <div class="fill-information">
-                                    <div class="m-auto" style="width: fit-content">
-                                        <button v-on:click="checkPaymentAmount" class="btn">
-                                            Thanh Toán
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row payment-method">
-                            <div class="col-lg-4">
-                                <div>
-                                    <img class="img-logo-payment"
-                                         src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fapps.apple.com%2Fvn%2Fapp%2Fvnpayqr%2Fid1270677646&psig=AOvVaw2v9Pk71LBzpqICiMgqFkVa&ust=1599042628324000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNDc1f_fx-sCFQAAAAAdAAAAABAz">
+                                         src="/assets/img/logo/VNPAY.png">
                                 </div>
                             </div>
                             <div class="col-lg-8">
@@ -989,42 +989,27 @@
                                         <h4>Số tiền<span class="require-text">*</span></h4>
                                     </div>
                                     <div class="input-information">
-                                        <input @keypress="removeDot(paymentAmount, 'float', $event)" id="vnPayAmountTxt" @input=" vnpayAmount = $event.target.value" type="text" placeholder="10.000 vnđ"
+                                        <input @keypress="removeDot(paymentAmount, 'float', $event)" id="vnPayAmountTxt" v-model="vnpayAmount" type="text" placeholder="10.000 vnđ"
                                                class="form-input-information rounded-pill border-0 shadow-sm">
                                     </div>
+
+                                </div>
+                                <div class="fill-information">
                                     <div class="title">
-                                        <h4>Nội dung</h4>
+                                        <h4>Nội dung<span class="require-text">*</span></h4>
                                     </div>
                                     <div class="input-information">
-                                        <textarea id="vnPayContentTxt" @input=" vnpayContent = $event.target.value" type="" placeholder="nội dung..."
+                                        <textarea id="vnPayContentTxt" v-model="vnpayContent" type="" placeholder="nội dung..."
                                                   class="form-input-information rounded-pill border-0 shadow-sm"></textarea>
                                     </div>
-                                    <div>
-                                        <label for="bankcode">Ngân hàng</label>
-                                        <select @input="vnpayBank = $event.target.value" name="bankcode" id="bankcode" class="form-control">
-                                            <option value="">Không chọn </option>
-                                            <option value="NCB">  	Ngan hang NCB</option>
-                                            <option value="SACOMBANK">Ngan hang SacomBank  </option>
-                                            <option value="EXIMBANK"> 	Ngan hang EximBank </option>
-                                            <option value="MSBANK"> 	Ngan hang MSBANK </option>
-                                            <option value="NAMABANK"> 	Ngan hang NamABank </option>
-                                            <option value="VISA">  	Thanh toan qua VISA/MASTER</option>
-                                            <option value="VNMART">  	Vi dien tu VnMart</option>
-                                            <option value="VIETINBANK">Ngan hang Vietinbank  </option>
-                                            <option value="VIETCOMBANK"> 	Ngan hang VCB </option>
-                                            <option value="HDBANK">Ngan hang HDBank</option>
-                                            <option value="DONGABANK">  	Ngan hang Dong A</option>
-                                            <option value="TPBANK"> 	Ngân hàng TPBank </option>
-                                            <option value="OJB">  	Ngân hàng OceanBank</option>
-                                            <option value="BIDV"> Ngân hàng BIDV </option>
-                                            <option value="TECHCOMBANK"> 	Ngân hàng Techcombank </option>
-                                            <option value="VPBANK"> 	Ngan hang VPBank </option>
-                                            <option value="AGRIBANK"> 	Ngan hang Agribank </option>
-                                            <option value="MBBANK"> 	Ngan hang MBBank </option>
-                                            <option value="ACB"> Ngan hang ACB </option>
-                                            <option value="OCB"> Ngan hang OCB </option>
-                                        </select>
-                                    </div>
+
+                                </div>
+
+                                <div class="input-information">
+                                    <p>
+                                        Lưu ý: Nên ghi rõ nội dung với cú pháp "Tên_Số điện thoại_Nap Tien Tai Khoan" để được dễ dàng xử lý khi phát sinh lỗi.
+                                        <br>Ví dụ: "Nguyen Van A_0912345678_Nap Tien Tai Khoan"
+                                    </p>
                                 </div>
 
                                 <div class="fill-information">
