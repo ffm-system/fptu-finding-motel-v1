@@ -28,5 +28,5 @@ jobs:
       with:
         app-name: 'fptufmotel'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_bda8b7b77b9c4ca4905e565df0a66cea }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_141b122e5a604730bd693e8e3f4708e9 }}
         package: '${{ github.workspace }}/target/*.war'
