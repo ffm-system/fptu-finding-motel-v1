@@ -1105,3 +1105,19 @@ a:hover {
         background-position: 650px 0;
     }
 }
+.img-wishlist{
+    height: 150px!important;
+    width: 150px;
+}
+.item-text-1{
+    width: 140px;
+}
+.item-text-2{
+    width: 300px;
+}
+.item-text-3{
+    width: 100px;
+}
+.item-text-4{
+    width: 180px;
+}

@@ -63,7 +63,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-show="isShowLoader" v-for="index in pagination.sizePage">
+                            <tr v-show="isShowLoader" v-for="index in pagination.sizePage != null ? pagination.sizePage : 5">
                                 <td v-for="col in 6">
                                     <div class="placeholder-content-wrapper">
                                         <!-- Placeholder Content -->
@@ -131,7 +131,7 @@
                                 </li>
                             </ul>
                         </nav>
-                        <div v-if="listRentalRq.length == 0" class="justify-content-center text-center">Không có yêu cầu nào</div>
+                        <div v-if="listRentalRq.length == 0 && !isShowLoader" class="justify-content-center text-center">Không có yêu cầu nào</div>
                     </div>
                 </div>
 
@@ -141,7 +141,48 @@
                         <h1 class="title-name uppercase">Danh sách yêu thích</h1>
                     </div>
                     <div class="information-detail">
-                        <div class="post-wishlist" v-for="itemWishList in wishList" v-bind:id="itemWishList.id">
+                        <div v-show="isShowLoader" class="post-wishlist" v-for="index in 6">
+                            <div class="img-post-wishlist" style="width: 211px">
+                                <div class="placeholder-content-wrapper">
+                                    <!-- Placeholder Content -->
+                                    <div class="placeholder-content img-wishlist">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="title-post-wishlist">
+                                <h4 style="width: 0">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content item-text-1">
+                                        </div>
+                                    </div>
+                                </h4>
+                                <div class="per-night" style="width: 0; padding-bottom: 5px">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content item-text-2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="per-night" style="width: 0; padding-bottom: 5px">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content item-text-3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="per-night" style="width: 0; padding-bottom: 5px">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content item-text-4">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div v-show="!isShowLoader" class="post-wishlist" v-for="itemWishList in wishList" v-bind:id="itemWishList.id">
                             <a v-bind:href="'/post-detail?id=' + itemWishList.post.id">
                                 <div class="img-post-wishlist">
                                     <img v-bind:src="itemWishList.post.images[0]" alt=""/>
@@ -202,7 +243,7 @@
                             </li>
                         </ul>
                     </nav>
-                    <div v-if="wishList.length == 0" class="justify-content-center text-center">Không có bài đăng yêu thích nào
+                    <div v-if="wishList.length == 0 && !isShowLoader" class="justify-content-center text-center">Không có bài đăng yêu thích nào
                     </div>
                 </div>
 

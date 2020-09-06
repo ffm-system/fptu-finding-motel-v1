@@ -35,6 +35,8 @@ var renterInstance = new Vue({
     },
     methods: {
         getWishlist(currentPage) {
+            authenticationInstance.hidePreloader()
+            this.isShowLoader = true
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -44,10 +46,10 @@ var renterInstance = new Vue({
             }).then(response => response.json())
                 .then((data) => {
                     if (data != null && data.code == "000") {
+                        this.isShowLoader = false
                         this.wishList = data.data
                         this.pagination = data.pagination
                     }
-                    authenticationInstance.hidePreloader()
                 }).catch(error => {
                 console.log(error);
             })
@@ -130,6 +132,7 @@ var renterInstance = new Vue({
         },
         searchRentalRequest(requestId, currentPage) {
             this.isShowLoader = true
+            authenticationInstance.hidePreloader()
             if( currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -156,7 +159,7 @@ var renterInstance = new Vue({
                             this.listRentalRq = responseMsg.data;
                             this.pagination = responseMsg.pagination
                         }
-                        authenticationInstance.hidePreloader()
+
                     }
                 }).catch(error => {
                 console.log(error);
