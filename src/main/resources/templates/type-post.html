@@ -69,7 +69,21 @@
             <section class="room-area">
                 <div class="container" id="postPage">
                     <div class="row" id="row">
-                        <div v-show="postList.length > 0" class="col-xl-4 col-lg-6 col-md-6" v-for="post in postList" v-bind:id="post.id">
+                        <div v-show="isShowLoader" v-for="index in pageSize != 0 ? pageSize : 6" class="col-xl-4 col-lg-6 col-md-6">
+                            <!-- Single Room -->
+                            <div class="single-room mb-50">
+                                <div class="room-img">
+                                    <div class="placeholder-content-preload"></div>
+                                </div>
+                                <div class="room-caption">
+                                    <h3><div class="placeholder-content-preload h20"></div></h3>
+                                    <div class="per-night">
+                                        <div class="placeholder-content-preload h20"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-show="postList.length > 0 && !isShowLoader" class="col-xl-4 col-lg-6 col-md-6" v-for="post in postList" v-bind:id="post.id">
                             <!-- Single Room -->
                             <div class="single-room mb-50">
                                 <div class="room-img">
@@ -86,23 +100,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-show="postList.length == 0" class="none-data-message">
+                        <div v-show="postList.length == 0 && !isShowLoader" class="none-data-message">
                             Không có bài đăng
                         </div>
                     </div>
                     <nav v-if="page.totalPages != 1 && postList.length > 0" class="form-group col-md-11 pagination-centered">
                         <ul class="pagination">
                             <li class="page-item" v-bind:class="(filterPostInstance.page - 1) < 1 ? 'pointer-disabled-only' : ''">
-                                <a class="page-link" v-bind:href="'/?page=' + ((filterPostInstance.page - 1) > 0 ? (filterPostInstance.page - 1) : 1)" aria-label="Previous">
+                                <a class="page-link" v-on:click="filterPostInstance.handleSearchClick((filterPostInstance.page - 1) > 0 ? (filterPostInstance.page - 1) : 1)" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                     <span class="sr-only">Previous</span>
                                 </a>
                             </li>
                             <li class="page-link-container" v-bind:class="page.number === (n-1) ? 'active pointer-disabled':''" v-for="n in endPage">
-                                <a class="page-link" v-bind:href="'/?page='+n" v-text="n"></a>
+                                <a class="page-link" v-on:click="filterPostInstance.handleSearchClick(n)" v-text="n"></a>
                             </li>
                             <li class="page-item" v-bind:class="(filterPostInstance.page + 1) > endPage ? 'pointer-disabled-only' : ''">
-                                <a class="page-link" v-bind:href="'/?page=' + ((filterPostInstance.page + 1) < endPage ? (filterPostInstance.page + 1) : endPage)" aria-label="Next">
+                                <a class="page-link" v-on:click="filterPostInstance.handleSearchClick((filterPostInstance.page + 1) < endPage ? (filterPostInstance.page + 1) : endPage)"  aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>
