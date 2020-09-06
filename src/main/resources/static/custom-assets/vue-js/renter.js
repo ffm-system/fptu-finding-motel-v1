@@ -10,7 +10,8 @@ var renterInstance = new Vue({
         selectedRentalRequest: null,
         message: "",
         expireMessage: "",
-        pagination: []
+        pagination: [],
+        isShowLoader : true,
     },
     beforeMount() {
         this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
@@ -128,6 +129,7 @@ var renterInstance = new Vue({
             }, 2000);
         },
         searchRentalRequest(requestId, currentPage) {
+            this.isShowLoader = true
             if( currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -146,6 +148,7 @@ var renterInstance = new Vue({
                 body: JSON.stringify(rentalRequest),
             }).then(response => response.json())
                 .then((responseMsg) => {
+                    this.isShowLoader = false
                     if (responseMsg.status == 403) {
                         window.location.href = "dang-nhap";
                     } else {

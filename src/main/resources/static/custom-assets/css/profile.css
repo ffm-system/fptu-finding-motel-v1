@@ -1076,3 +1076,32 @@ a:hover {
 .nav-paging{
     padding-top: 50px;
 }
+
+.placeholder-content-wrapper {
+    width: 100%;
+    /*margin: 10% auto 0;*/
+    /*padding: 20px;*/
+    background: #e5e5e5;
+}
+.placeholder-content {
+    height: 43px;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-name: placeholderAnimate;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eee 2%, #ddd 18%, #eee 33%);
+    background-size: 1300px;
+}
+@keyframes placeholderAnimate {
+    0% {
+        background-position: -650px 0;
+    }
+    100% {
+        background-position: 650px 0;
+    }
+}
