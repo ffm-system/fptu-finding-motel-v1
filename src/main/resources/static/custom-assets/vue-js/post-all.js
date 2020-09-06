@@ -146,8 +146,7 @@ var filterPostInstance = new Vue({
             }
         },
         handleSearchClick(){
-            processingLoaderInstance.displayText = "Tìm Kiếm"
-            processingLoaderInstance.showLoader()
+            postInstance.isShowLoader = true
             this.getPageFromQuery()
             let typeId = ""
             let filterPriceId = $("#select2").val()
@@ -187,7 +186,6 @@ var filterPostInstance = new Vue({
                 body: JSON.stringify(request),
             }).then(response => response.json())
                 .then((data) => {
-                    processingLoaderInstance.hideLoader()
                     if(data != null && data.code == "000"){
                         postInstance.pageSize = data.pageSize;
                         //  this.pages=data;

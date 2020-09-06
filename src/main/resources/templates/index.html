@@ -146,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-show="postList.length > 0" class="col-xl-4 col-lg-6 col-md-6" v-for="post in postList" v-bind:id="post.id">
+                <div v-show="postList.length > 0 && !isShowLoader" class="col-xl-4 col-lg-6 col-md-6" v-for="post in postList" v-bind:id="post.id">
                     <!-- Single Room -->
                     <div class="single-room mb-50">
                         <div class="room-img">
@@ -166,7 +166,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-show="postList.length == 0" class="none-data-message">
+                <div v-show="postList.length == 0 && !isShowLoader" class="none-data-message">
                     Không có bài đăng
                 </div>
             </div>
