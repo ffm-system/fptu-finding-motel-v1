@@ -11,6 +11,7 @@ var postInstance = new Vue({
         pageSize : 0,
         postIndex : -1,
         listPostOfRenter : [],
+        isShowLoader: true,
     },
     beforeMount(){
         this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
@@ -123,6 +124,7 @@ var filterPostInstance = new Vue({
                         this.listFilterSquare = data.listFilterSquare
                         this.listFilterDistance = data.listFilterDistance
                     }
+                    authenticationInstance.hidePreloader()
                 }).catch(error => {
                 console.log(error);
             })
@@ -193,7 +195,8 @@ var filterPostInstance = new Vue({
                         postInstance.page = data.page
                         postInstance.endPage = data.endPage;
                     }
-                    authenticationInstance.hidePreloader()
+                    postInstance.isShowLoader = false
+                        // authenticationInstance.hidePreloader()
                 }).catch(error => {
                 console.log(error);
             })

@@ -132,6 +132,20 @@
                 </div>
             </div>
             <div class="row" id="row">
+                <div v-show="isShowLoader" v-for="index in 6" class="col-xl-4 col-lg-6 col-md-6">
+                    <!-- Single Room -->
+                    <div class="single-room mb-50">
+                        <div class="room-img">
+                            <div class="placeholder-content-preload"></div>
+                        </div>
+                        <div class="room-caption">
+                            <h3><div class="placeholder-content-preload h20"></div></h3>
+                            <div class="per-night">
+                                <div class="placeholder-content-preload h20"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div v-show="postList.length > 0" class="col-xl-4 col-lg-6 col-md-6" v-for="post in postList" v-bind:id="post.id">
                     <!-- Single Room -->
                     <div class="single-room mb-50">
