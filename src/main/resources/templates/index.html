@@ -120,11 +120,11 @@
     <!-- Booking Room End-->
     <section class="room-area">
         <div class="container" id="postPage">
-            <div class="row justify-content-center" v-show="page.number + 1 == 1">
+            <div class="row justify-content-center">
                 <div class="col-xl-8">
                     <!--font-back-tittle  -->
                     <div class="font-back-tittle mb-45">
-                        <div class="archivment-front">
+                        <div class="archivment-front" v-show="page.number + 1 == 1">
                             <h3>Tin Mới Nhất</h3>
                             <p>Tìm trọ FPTU là website cho phép tìm phòng trọ, đăng tin </br> phòng trọ dành cho chủ trọ và sinh viên đại học FPT</p>
                         </div>
