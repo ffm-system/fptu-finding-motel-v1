@@ -248,7 +248,6 @@ var postDetailInstance = new Vue({
                 .then((data) => {
                     console.log(data);
                     this.relatedPosts = data.listPost;
-
                 }).catch(error => {
                 console.log(error);
             })

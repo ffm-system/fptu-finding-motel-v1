@@ -268,6 +268,22 @@
                         </div>
                         <div class="list-news-content">
                             <ul class="list-news clearfix">
+                                <li v-show="relatedPosts.length <= 0" class="news">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content">
+                                            <div class="placeholder-content_item"></div>
+                                            <div class="placeholder-content_item"></div>
+                                            <div class="placeholder-content_item"></div>
+                                            <div class="placeholder-content_item"></div>
+                                            <div class="placeholder-content_item"></div>
+                                            <div class="placeholder-content_item"></div>
+                                            <div class="placeholder-content_item"></div>
+                                            <div class="placeholder-content_item"></div>
+                                            <div class="placeholder-content_item"></div>
+                                        </div>
+                                    </div>
+                                </li>
                                 <li class="news" v-for="relatedPost in relatedPosts">
                                     <a class="post-link clearfix" v-bind:href="'/post-detail?id=' + relatedPost.id">
                                         <figure class="thumb">
