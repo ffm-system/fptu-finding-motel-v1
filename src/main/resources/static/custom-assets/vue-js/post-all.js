@@ -145,7 +145,7 @@ var filterPostInstance = new Vue({
                 window.location.href = "/"
             }
         },
-        handleSearchClick(){
+        handleSearchClick(page){
             postInstance.isShowLoader = true
             this.getPageFromQuery()
             let typeId = ""
@@ -163,18 +163,32 @@ var filterPostInstance = new Vue({
                 sessionStorage.setItem("filterSquareId", filterSquareId)
                 sessionStorage.setItem("filterDistanceId", filterDistanceId)
             }
-            if(this.page != 1){
-                window.location.href = this.currentUrl
+            // if(this.page != 1){
+            //     window.location.href = this.currentUrl
+            // }else {
+            //     let postRequestDTO = {
+            //         "typeId": this.isNullSearchParam(parseInt(typeId)),
+            //         "filterPriceId": this.isNullSearchParam(parseInt(filterPriceId)),
+            //         "filterSquareId": this.isNullSearchParam(parseInt(filterSquareId)),
+            //         "filterDistanceId": this.isNullSearchParam(parseInt(filterDistanceId)),
+            //         "page": this.page,
+            //     }
+            //     this.filterPost(postRequestDTO)
+            // }
+
+            if(page != null){
+                this.page = page
             }else {
-                let postRequestDTO = {
-                    "typeId": this.isNullSearchParam(parseInt(typeId)),
-                    "filterPriceId": this.isNullSearchParam(parseInt(filterPriceId)),
-                    "filterSquareId": this.isNullSearchParam(parseInt(filterSquareId)),
-                    "filterDistanceId": this.isNullSearchParam(parseInt(filterDistanceId)),
-                    "page": this.page,
-                }
-                this.filterPost(postRequestDTO)
+                this.page = 0
             }
+            let postRequestDTO = {
+                "typeId": this.isNullSearchParam(parseInt(typeId)),
+                "filterPriceId": this.isNullSearchParam(parseInt(filterPriceId)),
+                "filterSquareId": this.isNullSearchParam(parseInt(filterSquareId)),
+                "filterDistanceId": this.isNullSearchParam(parseInt(filterDistanceId)),
+                "page": this.page,
+            }
+            this.filterPost(postRequestDTO)
 
         },
         filterPost(request){
@@ -225,7 +239,7 @@ var filterPostInstance = new Vue({
     created() {
         this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
         this.getInitHomePage()
-        this.getPageFromQuery()
+        // this.getPageFromQuery()
         this.typeId = parseInt(sessionStorage.getItem("typeId"))
         this.filterPriceId = parseInt(sessionStorage.getItem("filterPriceId"))
         this.filterSquareId = parseInt(sessionStorage.getItem("filterSquareId"))
@@ -252,7 +266,7 @@ var filterPostInstance = new Vue({
             "filterPriceId": this.isNullSearchParam(this.filterPriceId),
             "filterSquareId": this.isNullSearchParam(this.filterSquareId),
             "filterDistanceId": this.isNullSearchParam(this.filterDistanceId),
-            "page": this.page,
+            "page": 0,
         }
         this.filterPost(request)
         if(this.userInfo != null && this.userInfo.role == 'RENTER'){
