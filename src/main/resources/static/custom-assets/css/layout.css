@@ -369,3 +369,15 @@ button:disabled{
 .h20 {
     height: 20px;
 }
+.ripple {
+    background-position: center;
+    transition: background 0.8s;
+}
+.ripple:hover {
+    background: #f1b233 radial-gradient(circle, transparent 1%, #f1b233 1%) center/15000%;
+}
+.ripple:active {
+    background-color: #e29c0e;
+    background-size: 100%;
+    transition: background 0s;
+}

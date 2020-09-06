@@ -47,7 +47,8 @@ public class BanUnbanLandlordModel implements BanUnbanLandlordService{
                 landlordRepository.updateUnBanDate(calendar.getTime(), username);
                 postRepository.updateVisiblePostByLandlord(false, username);
                 reportRepository.updateStatusReportByLandlord(username,
-                        Constant.STATUS_REPORT_PROCESSED_USER, Constant.STATUS_REPORT_PROCESSED_ALL);
+                        Constant.STATUS_REPORT_PROCESSED_USER, Constant.STATUS_REPORT_PROCESSED_ALL,
+                        Constant.STATUS_REPORT_PROCESSING, Constant.STATUS_REPORT_PROCESSED_POST);
 
                 return true;
             }

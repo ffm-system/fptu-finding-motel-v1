@@ -7,6 +7,7 @@ import com.example.fptufindingmotelv1.model.RoomModel;
 import com.example.fptufindingmotelv1.model.StatusModel;
 import com.example.fptufindingmotelv1.repository.PostRepository;
 import com.example.fptufindingmotelv1.repository.RoomRepository;
+import com.example.fptufindingmotelv1.untils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,9 +37,9 @@ public class AddRoomModel implements AddRoomService {
                 roomModel.setName(room.getRoomName());
                 StatusModel status;
                 if(room.isAvailableRoom()){
-                    status = new StatusModel(1L);
+                    status = new StatusModel(Constant.STATUS_ROOM_FREE);
                 }else{
-                    status = new StatusModel(2L);
+                    status = new StatusModel(Constant.STATUS_ROOM_BE_RENTED);
                 }
                 roomModel.setStatus(status);
                 listRoom.add(roomModel);

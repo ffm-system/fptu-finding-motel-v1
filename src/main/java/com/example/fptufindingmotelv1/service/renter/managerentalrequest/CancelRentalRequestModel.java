@@ -56,7 +56,7 @@ public class CancelRentalRequestModel implements CancelRentalRequestService {
             UserModel userModel = new UserModel(rentalRequestDTO.getLandlordUsername());
             RentalRequestModel rentalRequestModel = new RentalRequestModel(rentalRequestDTO.getId());
 
-            StatusModel statusNotification = new StatusModel(12L);
+            StatusModel statusNotification = new StatusModel(Constant.STATUS_NOTIFICATION_NOT_SEEN);
 
             Date date = new Date();
             Date createdDate = new Timestamp(date.getTime());

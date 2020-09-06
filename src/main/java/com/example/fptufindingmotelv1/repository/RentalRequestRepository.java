@@ -90,8 +90,9 @@ public interface RentalRequestRepository extends JpaRepository<RentalRequestMode
     @Query(value = "update RentalRequestModel r " +
             "set r.cancelDate = :cancelDate, " +
             "r.rentalStatus.id = :statusId " +
-            "where r.rentalRenter.username = :renterUsername")
-    void updateCancelStatusByRenter(String renterUsername, Date cancelDate, Long statusId);
+            "where r.rentalRenter.username = :renterUsername " +
+            "and r.rentalStatus.id = :statusProcessing")
+    void updateCancelStatusByRenter(String renterUsername, Date cancelDate, Long statusId, Long statusProcessing);
 
     @Modifying
     @Transactional
@@ -128,14 +129,15 @@ public interface RentalRequestRepository extends JpaRepository<RentalRequestMode
     @Modifying
     @Query(value = "update rq " +
             "set rq.STATUS_ID = case rq.STATUS_ID " +
-            "when 7 then :statusReject " +
+            "when :statusProcessing then :statusReject " +
             "else :statusExpire " +
             "end " +
             "from RENTAL_REQUEST rq " +
             "join ROOM r on rq.ROOM_ID = r.ID " +
             "where 1 = 1 " +
             "and (:postId is null or r.POST_ID = :postId)" +
-            "and (rq.STATUS_ID = 7 or rq.STATUS_ID = 9)" +
+            "and (rq.STATUS_ID = :statusProcessing or rq.STATUS_ID = :statusAccept)" +
             "", nativeQuery = true)
-    void updateStatusByPost(String postId, Long statusReject, Long statusExpire);
+    void updateStatusByPost(String postId, Long statusReject, Long statusExpire,
+                            Long statusProcessing, Long statusAccept);
 }

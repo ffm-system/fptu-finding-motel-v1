@@ -43,13 +43,13 @@ public class BanPostModel implements BanPostService{
 
         for (RentalRequestModel request :
                 listRequestOfPost) {
-            if (request.getRentalStatus().getId() == 7) {
+            if (request.getRentalStatus().getId() == Constant.STATUS_REQUEST_PROCESSING) {
                 isExistProcessingRequest = true;
                 notificationContent = "Yêu cầu thuê trọ vào <b>" + request.getRentalRoom().getName() +
                         "</b> - <b>" + rentalRequestDTO.getPostTitle() + "</b> đã bị từ chối do bài đăng đã bị khóa";
                 // send notification to Renter
                 sendNotification(request, notificationContent);
-            } else if (request.getRentalStatus().getId() == 9) {
+            } else if (request.getRentalStatus().getId() == Constant.STATUS_REQUEST_ACCEPTED) {
                 isExistAcceptedRequest = true;
 
                 notificationContent = "Yêu cầu thuê trọ vào <b>" + request.getRentalRoom().getName() +
@@ -59,12 +59,15 @@ public class BanPostModel implements BanPostService{
             }
         }
         if(isExistProcessingRequest || isExistAcceptedRequest){
-            rentalRequestRepository.updateStatusByPost(rentalRequestDTO.getPostId(), 10L, 11L);
+            rentalRequestRepository.updateStatusByPost(rentalRequestDTO.getPostId(),
+                    Constant.STATUS_REQUEST_REJECTED, Constant.STATUS_REQUEST_ENDED,
+                    Constant.STATUS_REQUEST_PROCESSING, Constant.STATUS_REQUEST_ACCEPTED);
         }
         roomRepository.updateStatusRoomByPost(rentalRequestDTO.getPostId(), Constant.STATUS_ROOM_FREE, Constant.STATUS_ROOM_BE_RENTED);
 
         reportRepository.updateStatusReportByPost(rentalRequestDTO.getPostId(),
-                Constant.STATUS_REPORT_PROCESSED_POST, Constant.STATUS_REPORT_PROCESSED_ALL);
+                Constant.STATUS_REPORT_PROCESSED_POST, Constant.STATUS_REPORT_PROCESSED_ALL,
+                Constant.STATUS_REPORT_PROCESSING, Constant.STATUS_REPORT_PROCESSED_USER);
 
         postRepository.updateBannedPost(true, rentalRequestDTO.getPostId());
 
@@ -77,7 +80,7 @@ public class BanPostModel implements BanPostService{
             NotificationModel notificationModel = new NotificationModel();
             UserModel renterModel = new UserModel(requestModel.getRentalRenter().getUsername());
 
-            StatusModel statusNotification = new StatusModel(12L);
+            StatusModel statusNotification = new StatusModel(Constant.STATUS_NOTIFICATION_NOT_SEEN);
 
             Date date = new Date();
             Date createdDate = new Timestamp(date.getTime());

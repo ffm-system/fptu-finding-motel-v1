@@ -8,6 +8,7 @@ import com.example.fptufindingmotelv1.model.StatusModel;
 import com.example.fptufindingmotelv1.repository.PostRepository;
 import com.example.fptufindingmotelv1.repository.RenterRepository;
 import com.example.fptufindingmotelv1.repository.ReportRepository;
+import com.example.fptufindingmotelv1.untils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class ReportPostModel implements ReportPostService {
             ReportModel reportModel = null;
             PostModel postModel = new PostModel(reportRequestDTO.getPostId());
             RenterModel renterModel = new RenterModel(reportRequestDTO.getRenterId());
-            StatusModel statusModel = new StatusModel(3L);
+            StatusModel statusModel = new StatusModel(Constant.STATUS_REPORT_PROCESSING);
             reportModel = new ReportModel(renterModel, postModel, statusModel, reportRequestDTO);
             reportRepository.save(reportModel);
         } catch (Exception e) {

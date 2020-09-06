@@ -5,6 +5,7 @@ import com.example.fptufindingmotelv1.model.*;
 import com.example.fptufindingmotelv1.repository.NotificationRepository;
 import com.example.fptufindingmotelv1.repository.RentalRequestRepository;
 import com.example.fptufindingmotelv1.repository.RoomRepository;
+import com.example.fptufindingmotelv1.untils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -29,32 +30,32 @@ public class ChangeRoomStatusModel implements ChangeRoomStatusService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     @Override
     public boolean changeRoomStatus(RentalRequestDTO rentalRequestDTO) {
-        if(rentalRequestDTO.getStatusId() == 1){
+        if(rentalRequestDTO.getStatusId() == Constant.STATUS_ROOM_FREE){
             List<RentalRequestModel> listRequestOfRoom =
-                    rentalRequestRepository.getListRequestIdByRoom(rentalRequestDTO.getRoomId(), 7L);
-            roomRepository.updateStatusRoom(rentalRequestDTO.getRoomId(), 2L);
+                    rentalRequestRepository.getListRequestIdByRoom(rentalRequestDTO.getRoomId(),
+                            Constant.STATUS_REQUEST_PROCESSING);
+            roomRepository.updateStatusRoom(rentalRequestDTO.getRoomId(), Constant.STATUS_ROOM_BE_RENTED);
             if(listRequestOfRoom != null && listRequestOfRoom.size() > 0){
-                StatusModel statusReject = new StatusModel(10L);
                 for (RentalRequestModel request:
                         listRequestOfRoom) {
-                    request.setRentalStatus(statusReject);
                     String notificationContent = "Chủ trọ <b>" + rentalRequestDTO.getLandlordUsername() +
                             "</b> đã từ chối yêu cầu thuê trọ vào <b>" + rentalRequestDTO.getRoomName() +
                             "</b> - <b>" + rentalRequestDTO.getPostTitle() + "</b>";
                     // send notification to Renter
                     sendNotification(request, notificationContent);
                 }
-                rentalRequestRepository.updateStatus(null, 10L,
-                        rentalRequestDTO.getRoomId(), 7L);
+                rentalRequestRepository.updateStatus(null, Constant.STATUS_REQUEST_REJECTED,
+                        rentalRequestDTO.getRoomId(), Constant.STATUS_REQUEST_PROCESSING);
             }
-        }else if(rentalRequestDTO.getStatusId() == 2){
-            roomRepository.updateStatusRoom(rentalRequestDTO.getRoomId(), 1L);
+        }else if(rentalRequestDTO.getStatusId() == Constant.STATUS_ROOM_BE_RENTED){
+            roomRepository.updateStatusRoom(rentalRequestDTO.getRoomId(), Constant.STATUS_ROOM_FREE);
 
             List<RentalRequestModel> requestAccepted = rentalRequestRepository.getListRequestIdByRoom(
-                    rentalRequestDTO.getRoomId(), 9L);
+                    rentalRequestDTO.getRoomId(), Constant.STATUS_REQUEST_ACCEPTED);
             if(requestAccepted != null && requestAccepted.size() > 0){
                 rentalRequestRepository.updateExpireStatus(null, rentalRequestDTO.getExpireMessage(),
-                        11L, rentalRequestDTO.getRoomId(), 9L);
+                        Constant.STATUS_REQUEST_ENDED, rentalRequestDTO.getRoomId(),
+                        Constant.STATUS_REQUEST_ACCEPTED);
                 String notificationContent = "Chủ trọ <b>" + rentalRequestDTO.getLandlordUsername() +
                         "</b> đã kết thúc cho thuê phòng tại <b>" + rentalRequestDTO.getRoomName() +
                         "</b> - <b>" + rentalRequestDTO.getPostTitle() + "</b>";
@@ -71,7 +72,7 @@ public class ChangeRoomStatusModel implements ChangeRoomStatusService {
             NotificationModel notificationModel = new NotificationModel();
             UserModel renterModel = new UserModel(requestModel.getRentalRenter().getUsername());
 
-            StatusModel statusNotification = new StatusModel(12L);
+            StatusModel statusNotification = new StatusModel(Constant.STATUS_NOTIFICATION_NOT_SEEN);
 
             Date date = new Date();
             Date createdDate = new Timestamp(date.getTime());

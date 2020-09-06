@@ -18,6 +18,15 @@ public class Constant {
     public static final Long LANDLORD_ID = 2L;
     public static final int BAN_USER_DATE_NUMBER = 14;
 
+    public static final Long STATUS_REQUEST_PROCESSING = 7L;
+    public static final Long STATUS_REQUEST_CANCELED = 8L;
+    public static final Long STATUS_REQUEST_ACCEPTED = 9L;
+    public static final Long STATUS_REQUEST_REJECTED = 10L;
+    public static final Long STATUS_REQUEST_ENDED = 11L;
+
+    public static final Long STATUS_NOTIFICATION_NOT_SEEN = 12L;
+    public static final Long STATUS_NOTIFICATION_SEEN = 13L;
+
     public static final Long STATUS_ROOM_FREE = 1L;
     public static final Long STATUS_ROOM_BE_RENTED = 2L;
 

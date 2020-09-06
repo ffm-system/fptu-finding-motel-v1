@@ -4,6 +4,7 @@ import com.example.fptufindingmotelv1.dto.NotificationDTO;
 import com.example.fptufindingmotelv1.model.NotificationModel;
 import com.example.fptufindingmotelv1.model.StatusModel;
 import com.example.fptufindingmotelv1.repository.NotificationRepository;
+import com.example.fptufindingmotelv1.untils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -35,7 +36,7 @@ public class ViewNotificationsModel implements ViewNotificationsService {
     @Override
     public int getNotificationNumber(NotificationDTO request) {
         try {
-            return notificationRepository.getNotificationNumber(request.getUsername(), 12L);
+            return notificationRepository.getNotificationNumber(request.getUsername(), Constant.STATUS_NOTIFICATION_NOT_SEEN);
         }catch (Exception e){
             e.printStackTrace();
             return -1;
@@ -46,7 +47,7 @@ public class ViewNotificationsModel implements ViewNotificationsService {
     public NotificationModel changeStatusNotification(NotificationDTO request) {
         try {
             NotificationModel notificationModel = notificationRepository.findById(request.getId()).get();
-            StatusModel statusNotificationSeen = new StatusModel(13L);
+            StatusModel statusNotificationSeen = new StatusModel(Constant.STATUS_NOTIFICATION_SEEN);
             notificationModel.setStatusNotification(statusNotificationSeen);
             return notificationRepository.save(notificationModel);
         }catch (Exception e){
@@ -75,7 +76,7 @@ public class ViewNotificationsModel implements ViewNotificationsService {
             c.setTime(date);
             c.add(Calendar.DAY_OF_MONTH, -30);
             Date createDateExpire = c.getTime();
-            notificationRepository.removeNotifications(createDateExpire, 13L, request.getUsername());
+            notificationRepository.removeNotifications(createDateExpire, Constant.STATUS_NOTIFICATION_SEEN, request.getUsername());
             return true;
         }catch (Exception e){
             e.printStackTrace();

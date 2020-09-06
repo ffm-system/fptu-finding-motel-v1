@@ -35,8 +35,8 @@ public class SendSendRentalRequestModel implements SendRentalRequestService {
         try {
             RenterModel renterModel = new RenterModel(rentalRequestDTO.getRenterUsername());
             RoomModel roomModel = new RoomModel(rentalRequestDTO.getRoomId());
-            StatusModel statusAccept = new StatusModel(9L);
-            StatusModel statusProcess = new StatusModel(7L);
+            StatusModel statusAccept = new StatusModel(Constant.STATUS_REQUEST_ACCEPTED);
+            StatusModel statusProcess = new StatusModel(Constant.STATUS_REQUEST_PROCESSING);
             if(rentalRequestRepository.existsByRentalRenterAndRentalRoomAndRentalStatus(renterModel, roomModel, statusAccept)){
                 return "Bạn đã thuê phòng này!";
             }else if(rentalRequestRepository.existsByRentalRenterAndRentalStatus(renterModel, statusAccept)){
@@ -59,14 +59,6 @@ public class SendSendRentalRequestModel implements SendRentalRequestService {
             if (message != null && !message.equals("000")) {
                 return Constant.responseMsg("111", message, null);
             }else if(message != null && message.equals("000")){
-//                RentalRequestModel rentalRequestModel = new RentalRequestModel();
-//                RoomModel roomModel = new RoomModel(rentalRequestDTO.getRoomId());
-//                RenterModel renterModel = new RenterModel(rentalRequestDTO.getRenterUsername());
-//                StatusModel statusModel = new StatusModel(7L);
-//                rentalRequestModel.setId(rentalRequestDTO.getId());
-//                rentalRequestModel.setRentalRoom(roomModel);
-//                rentalRequestModel.setRentalRenter(renterModel);
-//                rentalRequestModel.setRentalStatus(statusModel);
 
                 Date date = new Date();
                 Date createdDate = new Timestamp(date.getTime());
@@ -74,11 +66,7 @@ public class SendSendRentalRequestModel implements SendRentalRequestService {
                 if(createdDate.after(rentalRequestDTO.getStartDate())){
                     return Constant.responseMsg("001", "Vui lòng chọn ngày bắt đầu sau ngày " + sdf.format(createdDate), null);
                 }
-                //set start date
-//                rentalRequestModel.setStartDate(rentalRequestDTO.getStartDate());
-//                rentalRequestModel.setRequestDate(createdDate);
-//
-//                rentalRequestModel = rentalRequestRepository.save(rentalRequestModel);
+
                 String id = UUID.randomUUID().toString();
                 rentalRequestRepository.insertRentalRequest(id, rentalRequestDTO.getRenterUsername(),
                         rentalRequestDTO.getRoomId(), createdDate, rentalRequestDTO.getStartDate(), 7L);
@@ -103,7 +91,7 @@ public class SendSendRentalRequestModel implements SendRentalRequestService {
             UserModel landlordModel = new UserModel(rentalRequestDTO.getLandlordUsername());
             RentalRequestModel rentalRequestModel = new RentalRequestModel(requestId);
 
-            StatusModel statusNotification = new StatusModel(12L);
+            StatusModel statusNotification = new StatusModel(Constant.STATUS_NOTIFICATION_NOT_SEEN);
 
             Date date = new Date();
             Date createdDate = new Timestamp(date.getTime());

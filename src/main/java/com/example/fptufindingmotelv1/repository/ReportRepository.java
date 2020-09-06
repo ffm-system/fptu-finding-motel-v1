@@ -38,26 +38,28 @@ public interface ReportRepository extends JpaRepository<ReportModel, String> {
     @Modifying
     @Query(value = "update ReportModel rp " +
             "set rp.statusReport.id = case rp.statusReport.id " +
-            "when 3 then :statusReportPost " +
+            "when :statusReportProcess then :statusReportPost " +
             "else :statusReportAll " +
             "end " +
             "where rp.postReport.id = :postId " +
-            "and (rp.statusReport.id = 3 or rp.statusReport.id = 5)" +
+            "and (rp.statusReport.id = :statusReportProcess or rp.statusReport.id = :statusReportUser)" +
             "")
-    void updateStatusReportByPost(String postId, Long statusReportPost, Long statusReportAll);
+    void updateStatusReportByPost(String postId, Long statusReportPost, Long statusReportAll,
+                                  Long statusReportProcess, Long statusReportUser);
 
     @Transactional
     @Modifying
     @Query(value = "update rp " +
             "set rp.STATUS_ID = case rp.STATUS_ID " +
-            "when 3 then :statusReportUser " +
+            "when :statusReportProcess then :statusReportUser " +
             "else :statusReportAll " +
             "end " +
             "from REPORT rp " +
             "join POST p on p.ID = rp.POST_ID " +
             "where p.LANDLORD_ID = :landlordUsername " +
-            "and (rp.STATUS_ID = 3 or rp.STATUS_ID = 4)" +
+            "and (rp.STATUS_ID = :statusReportProcess or rp.STATUS_ID = :statusReportPost)" +
             "", nativeQuery = true)
-    void updateStatusReportByLandlord(String landlordUsername, Long statusReportUser, Long statusReportAll);
+    void updateStatusReportByLandlord(String landlordUsername, Long statusReportUser, Long statusReportAll,
+                                      Long statusReportProcess, Long statusReportPost);
 
 }

@@ -5,6 +5,7 @@ import com.example.fptufindingmotelv1.model.*;
 import com.example.fptufindingmotelv1.repository.NotificationRepository;
 import com.example.fptufindingmotelv1.repository.RentalRequestRepository;
 import com.example.fptufindingmotelv1.repository.RoomRepository;
+import com.example.fptufindingmotelv1.untils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,7 +31,7 @@ public class AcceptRentalRequestModel implements AcceptRentalRequestService {
     @Override
     public boolean acceptRentalRequest(RentalRequestDTO rentalRequestDTO) {
         List<RentalRequestModel> listRequestOfRoom =
-                rentalRequestRepository.getListRequestIdByRoom(rentalRequestDTO.getRoomId(), 7L);
+                rentalRequestRepository.getListRequestIdByRoom(rentalRequestDTO.getRoomId(), Constant.STATUS_REQUEST_PROCESSING);
         for (RentalRequestModel request:
                 listRequestOfRoom) {
             if(!request.getId().equals(rentalRequestDTO.getId())){
@@ -49,12 +50,14 @@ public class AcceptRentalRequestModel implements AcceptRentalRequestService {
         }
         Date date = new Date();
         Date cancelDate = new Timestamp(date.getTime());
-        rentalRequestRepository.updateCancelStatusByRenter(rentalRequestDTO.getRenterUsername(), cancelDate, 8L);
+        rentalRequestRepository.updateCancelStatusByRenter(rentalRequestDTO.getRenterUsername(), cancelDate,
+                Constant.STATUS_REQUEST_CANCELED, Constant.STATUS_REQUEST_PROCESSING);
 
-        roomRepository.updateStatusRoom(rentalRequestDTO.getRoomId(), 2L);
+        roomRepository.updateStatusRoom(rentalRequestDTO.getRoomId(), Constant.STATUS_ROOM_BE_RENTED);
 
-        rentalRequestRepository.updateStatus(rentalRequestDTO.getId(), 9L, null, null);
-        rentalRequestRepository.updateStatus(null, 10L, rentalRequestDTO.getRoomId(), 7L);
+        rentalRequestRepository.updateStatus(rentalRequestDTO.getId(), Constant.STATUS_REQUEST_ACCEPTED, null, null);
+        rentalRequestRepository.updateStatus(null, Constant.STATUS_REQUEST_REJECTED,
+                rentalRequestDTO.getRoomId(), Constant.STATUS_REQUEST_PROCESSING);
         return true;
     }
 
@@ -64,7 +67,7 @@ public class AcceptRentalRequestModel implements AcceptRentalRequestService {
             NotificationModel notificationModel = new NotificationModel();
             UserModel renterModel = new UserModel(requestModel.getRentalRenter().getUsername());
 
-            StatusModel statusNotification = new StatusModel(12L);
+            StatusModel statusNotification = new StatusModel(Constant.STATUS_NOTIFICATION_NOT_SEEN);
 
             Date date = new Date();
             Date createdDate = new Timestamp(date.getTime());

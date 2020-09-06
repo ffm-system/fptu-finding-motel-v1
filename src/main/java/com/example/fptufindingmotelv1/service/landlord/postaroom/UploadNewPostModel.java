@@ -112,9 +112,9 @@ public class UploadNewPostModel implements UploadNewPostService {
             roomModel.setName(room.getRoomName());
             StatusModel status;
             if(room.isAvailableRoom()){
-                status = new StatusModel(1L);
+                status = new StatusModel(Constant.STATUS_ROOM_FREE);
             }else{
-                status = new StatusModel(2L);
+                status = new StatusModel(Constant.STATUS_ROOM_BE_RENTED);
             }
             roomModel.setStatus(status);
             roomModel.setPostRoom(newPostCreated);
