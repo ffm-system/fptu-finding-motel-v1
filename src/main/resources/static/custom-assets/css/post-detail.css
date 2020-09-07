@@ -662,3 +662,12 @@ main {
         background-position: 650px 0;
     }
 }
+.room-loader{
+    height: 30px!important;
+    width: 92px;
+}
+.room-loader-container{
+    width: 92px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}

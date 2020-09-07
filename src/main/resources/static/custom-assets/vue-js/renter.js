@@ -151,11 +151,11 @@ var renterInstance = new Vue({
                 body: JSON.stringify(rentalRequest),
             }).then(response => response.json())
                 .then((responseMsg) => {
-                    this.isShowLoader = false
                     if (responseMsg.status == 403) {
                         window.location.href = "dang-nhap";
                     } else {
                         if (responseMsg != null && responseMsg.code == "000") {
+                            this.isShowLoader = false
                             this.listRentalRq = responseMsg.data;
                             this.pagination = responseMsg.pagination
                         }
