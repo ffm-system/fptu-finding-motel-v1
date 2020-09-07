@@ -93,13 +93,13 @@ var authenticationInstance = new Vue({
             }, time);
         },
         showNotifications(){
-            this.isLoaderBell = true;
+
             if(!this.isShowNotification && this.listNotification.length == 0){
                 this.getListNotification();
+                this.isLoaderBell = true;
             }
             document.addEventListener("click", function (event) {
                 if (authenticationInstance.isShowNotification){
-                    authenticationInstance.isLoaderBell = false;
                     let notificationContainer = document.getElementById("notification-container");
                     let bellContainer = document.getElementById("bell-wrapper")
                     let el = event.target
