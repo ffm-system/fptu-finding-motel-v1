@@ -10,7 +10,7 @@ var authenticationInstance = new Vue({
         listNotification : [],
         firstPageNotifies : -1,
         isLastPageNotify : true,
-        isLoaderBell: false,
+        isLoaderBell: true,
     },
     methods: {
         logout(){
