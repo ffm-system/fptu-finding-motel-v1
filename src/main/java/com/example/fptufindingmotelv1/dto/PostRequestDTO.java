@@ -22,4 +22,5 @@ public class PostRequestDTO {
     private Boolean isVisible;
     private String address;
     private String mapLocation;
+    private boolean userBanned;
 }

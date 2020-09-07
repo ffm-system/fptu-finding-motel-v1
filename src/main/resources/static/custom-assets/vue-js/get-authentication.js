@@ -55,12 +55,22 @@ var authenticationInstance = new Vue({
             sessionStorage.setItem("task", task)
             if(task == 13){
                 if(this.userInfo.banned){
-                    modalMessageInstance.message = "Tài khoản của bạn bị tạm khóa đến " + this.userInfo.unBanDate + "</br>" +
+                    modalMessageInstance.message = "Tài khoản của bạn bị tạm khóa đến <b>" + this.userInfo.unBanDate + "</b></br>" +
                         "Tất cả bài đăng sẽ bị ẩn " + "</br>" +
-                        "Chức năng Đăng Tin và Nạp Tiền bị khóa";
+                        "Chức năng <b>Đăng Tin</b> và <b>Nạp Tiền</b> bị khóa";
                     modalMessageInstance.showModal()
                 }else{
                     window.location.href = "dang-tin"
+                }
+
+            }else if(task == 8){
+                if(this.userInfo.banned){
+                    modalMessageInstance.message = "Tài khoản của bạn bị tạm khóa đến <b>" + this.userInfo.unBanDate + "</b></br>" +
+                        "Tất cả bài đăng sẽ bị ẩn " + "</br>" +
+                        "Chức năng <b>Đăng Tin</b> và <b>Nạp Tiền</b> bị khóa";
+                    modalMessageInstance.showModal()
+                }else{
+                    window.location.href = "nap-tien"
                 }
 
             }else if(task == 0 || task == 1){
@@ -283,9 +293,9 @@ var authenticationInstance = new Vue({
                         || document.referrer.includes("/dang-ky")
                         || document.referrer.includes("/facebook?code=")
                         || document.referrer.includes("/google?code="))){
-                        modalMessageInstance.message = "Tài khoản của bạn bị tạm khóa đến " + this.userInfo.unBanDate + "</br>" +
+                        modalMessageInstance.message = "Tài khoản của bạn bị tạm khóa đến <b>" + this.userInfo.unBanDate + "</b></br>" +
                             "Tất cả bài đăng sẽ bị ẩn " + "</br>" +
-                            "Chức năng Đăng Tin và Nạp Tiền bị khóa";
+                            "Chức năng <b>Đăng Tin</b> và <b>Nạp Tiền</b> bị khóa";
                         modalMessageInstance.showModal()
                     }
                 }else {

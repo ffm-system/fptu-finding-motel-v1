@@ -65,7 +65,7 @@ public class ExtendTimePostModel implements ExtendTimePostService {
         paymentPostRepository.save(paymentPostModel);
 
         // add expire date and save post
-        postRepository.updateExpireDatePost(expireDate, true, postModel.getId());
+        postRepository.updateExpireDatePost(expireDate, !postRequestDTO.isUserBanned(), postModel.getId());
         JSONObject response = new JSONObject();
 
         response.put("code", postModel != null ? "000" : "999");

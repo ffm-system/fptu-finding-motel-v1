@@ -151,17 +151,17 @@ var landlordInstance = new Vue({
                 modalConfirmInstance.messageConfirm = 'Bạn có muốn xóa bài viết này không?';
                 sessionStorage.setItem("confirmAction", "delete-post")
             }else if(confirmType == 'hide'){
+                if(post.banned){
+                    modalMessageInstance.title = "Thông báo"
+                    modalMessageInstance.message = "Bài đăng của bạn đã bị khóa!";
+                    modalMessageInstance.showModal()
+                    return
+                }
                 if(this.userInfo.banned){
                     modalMessageInstance.title = "Thông báo"
                     modalMessageInstance.message = "Tài khoản của bạn bị tạm khóa đến <b>" + this.userInfo.unBanDate + "</b></br>" +
                         "Tất cả bài đăng sẽ bị ẩn " + "</br>" +
                         "Chức năng <b>Đăng Tin</b> và <b>Nạp Tiền</b> bị khóa";
-                    modalMessageInstance.showModal()
-                    return
-                }
-                if(post.banned){
-                    modalMessageInstance.title = "Thông báo"
-                    modalMessageInstance.message = "Bài đăng của bạn đã bị khóa!";
                     modalMessageInstance.showModal()
                     return
                 }
@@ -243,6 +243,7 @@ var landlordInstance = new Vue({
                 }
                 this.listRoom.push(room)
             }
+            this.isShowLoader = false
         },
         openFileDialog(){
             let inputFileElem = document.getElementById("file-browse")
@@ -680,6 +681,7 @@ var landlordInstance = new Vue({
                 'postId' : this.postId,
                 'paymentPackageId' : this.duration,
                 'username' : this.userInfo.username,
+                'userBanned' : this.userInfo.banned,
             }
             let options = {
                 method: 'POST',
@@ -816,6 +818,12 @@ var landlordInstance = new Vue({
             })
         },
         handleViewRoom(post){
+            if(post.banned){
+                modalMessageInstance.title = "Thông báo"
+                modalMessageInstance.message = "Bài đăng của bạn đã bị khóa";
+                modalMessageInstance.showModal()
+                return
+            }
             userTaskInstance.task = 15
             noteInstance.task = 15
             this.task = 15
@@ -825,7 +833,6 @@ var landlordInstance = new Vue({
             this.getListRoomByPost(post.id)
         },
         handleChangeRoomStatus(room, index){
-        
             this.roomIndex = index
             this.selectedRoom = room
             if(room.status.id == 1){

@@ -148,7 +148,7 @@
                                                    v-show="userInfo.role == 'LANDLORD'"
                                                    v-text="'Xử lý yêu cầu thuê trọ (' + userInfo.requestNumber + ')'"></a>
                                             </li>
-                                            <li><a th:href="@{/nap-tien}" v-on:click="getTaskPage(8)"
+                                            <li><a style="cursor: pointer" v-on:click="getTaskPage(8)"
                                                    v-show="userInfo.role == 'LANDLORD'">Nạp tiền</a></li>
 
 
