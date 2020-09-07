@@ -277,7 +277,10 @@ var authenticationInstance = new Vue({
                 console.log(data)
                 if(data != null && data.userInfo != null){
                     this.userInfo = data.userInfo
-                    if(window.location.href.includes("nap-tien")){
+                    if(window.location.href.includes("nap-tien")
+                    || window.location.href.includes("dang-tin")
+                    || window.location.href.includes("quan-ly-tai-khoan")
+                        || window.location.href.includes("quan-ly-bai-dang")){
                         basicInfoInstance.userInfo = data.userInfo
                     }
                     sessionStorage.setItem("userInfo", JSON.stringify(data.userInfo))
