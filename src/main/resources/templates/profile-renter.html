@@ -55,15 +55,25 @@
                                 <th width="25%">Tên phòng trọ</th>
                                 <th width="10%">Phòng</th>
                                 <th width="20%">Ngày tạo</th>
-                                <th width="15%" v-if="task != 18 || listRentalRq[0].rentalStatus.id != 11">Ngày bắt đầu</th>
+                                <th width="15%" >Ngày bắt đầu</th>
                                 <th width="20%">Tình trạng</th>
                                 <th width="10%"
-                                    v-text="task == 18 && listRentalRq[0].rentalStatus.id == 11 ? 'Lời nhắn' : 'Tác vụ'">Tác vụ
+                                    v-text="task == 18 && listRentalRq[0] != null && listRentalRq[0].rentalStatus.id == 11 ? 'Lời nhắn' : 'Tác vụ'">Tác vụ
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-show="isShowLoader" v-for="index in pagination.sizePage != null ? pagination.sizePage : 5">
+                            <tr v-show="isShowLoader && task != 18" v-for="index in pagination.sizePage != null ? pagination.sizePage : 5">
+                                <td v-for="col in 6">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content">
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            <tr v-show="isShowLoader && task == 18">
                                 <td v-for="col in 6">
                                     <div class="placeholder-content-wrapper">
                                         <!-- Placeholder Content -->
@@ -78,8 +88,7 @@
                                        v-text="rentalRequest.rentalRoom.postRoom.title" target="_blank"></a></td>
                                 <td v-text="rentalRequest.rentalRoom.name"></td>
                                 <td v-text="authenticationInstance.formatDate(rentalRequest.requestDate)"></td>
-                                <td v-if="task != 18 || listRentalRq[0].rentalStatus.id != 11"
-                                    v-text="authenticationInstance.formatDate(rentalRequest.startDate, true)"></td>
+                                <td v-text="authenticationInstance.formatDate(rentalRequest.startDate, true)"></td>
                                 <td v-text="rentalRequest.rentalStatus.status"></td>
                                 <td>
                                     <button v-if="rentalRequest.rentalStatus.id == 7"
