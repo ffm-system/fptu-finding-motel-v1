@@ -99,6 +99,7 @@ var authenticationInstance = new Vue({
             }
             document.addEventListener("click", function (event) {
                 if (authenticationInstance.isShowNotification){
+                    authenticationInstance.isLoaderBell = false;
                     let notificationContainer = document.getElementById("notification-container");
                     let bellContainer = document.getElementById("bell-wrapper")
                     let el = event.target
@@ -108,7 +109,6 @@ var authenticationInstance = new Vue({
                         authenticationInstance.isShowNotification = false
                     }
                 }
-
             })
             this.isShowNotification = !this.isShowNotification
         },
