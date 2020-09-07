@@ -284,6 +284,7 @@ var authenticationInstance = new Vue({
                     this.authenticated = true
                     this.getNotificationNumber()
                     this.removeNotifications()
+                    this.hidePreloader()
 
                     if(window.location.href.includes("/dang-nhap")){
                         window.location.href = "/"

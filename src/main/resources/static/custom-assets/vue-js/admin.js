@@ -172,7 +172,6 @@
         },
         searchUser(currentPage) {
             this.isShowLoader = true;
-            authenticationInstance.hidePreloader()
             if (currentPage == undefined || !currentPage) currentPage = 0;
             let request = {
                 'username': this.inputSearchUser.trim(),
@@ -323,7 +322,6 @@
         },
         searchPost(currentPage) {
             this.isShowLoader = true;
-            authenticationInstance.hidePreloader()
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -403,7 +401,6 @@
         },
         searchReport(currentPage) {
             this.isShowLoader = true;
-            authenticationInstance.hidePreloader()
             if (currentPage == undefined || !currentPage) currentPage = 0;
             let reportRequestDTO = {
                 "landlordId": this.inputLandlordId.trim() == "" ? null : this.inputLandlordId,
@@ -512,7 +509,6 @@
         },
         getAllPaymentPackage(currentPage) {
             this.isShowLoader = true;
-            authenticationInstance.hidePreloader()
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }

@@ -698,9 +698,6 @@
                         <h1 class="title-name uppercase" v-text="task == 5 ? 'Quản lý yêu cầu' : 'Quản lý phòng'"></h1>
                     </div>
                     <div class="information-detail">
-                        <div v-show="(listRoomRequest == null || listRoomRequest.length == 0) && !isShowLoader">
-                            <span>Không có yêu cầu thuê trọ nào</span>
-                        </div>
                         <table class="table table-bordered table-hover">
                             <thead class="thead-light">
                             <tr v-if="task == 5">
@@ -789,6 +786,9 @@
 
                             </tbody>
                         </table>
+                        <div v-show="(listRoomRequest == null || listRoomRequest.length == 0) && !isShowLoader">
+                            <span>Không có yêu cầu thuê trọ nào</span>
+                        </div>
                         <nav v-if="pagination.totalPages != 1 && listRoomRequest.length > 0"
                              aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
