@@ -441,3 +441,18 @@ button:disabled{
         transform: translateX(0);
     }
 }
+
+.h10 {
+    height: 10px;
+}
+
+.bb-notify-bell {
+    display: block;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e9ecef;
+    cursor: pointer;
+}
+
+.w30 {
+    width: 30px;
+}

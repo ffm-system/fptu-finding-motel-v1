@@ -185,17 +185,20 @@
                                                     <span>Thông báo</span>
                                                 </div>
                                                 <div class="notification-body">
-                                                    <div v-show="isLoaderBell" class="no-notification">
-                                                        <div class="loader">
-                                                            <div class="loader--dot"></div>
-                                                            <div class="loader--dot"></div>
-                                                            <div class="loader--dot"></div>
-                                                            <div class="loader--dot"></div>
-                                                            <div class="loader--dot"></div>
-                                                            <div class="loader--dot"></div>
-                                                        </div>
+                                                    <div v-show="isLoaderBell" class="">
+                                                            <div class="notification-list">
+                                                                <div class="bb-notify-bell" v-for="n in 5">
+                                                                    <div class="notify-content">
+                                                                        <div class="placeholder-content-preload h10"></div>
+                                                                    </div>
+                                                                    <div class="notify-date w-25">
+                                                                        <div class="placeholder-content-preload h10"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                     </div>
-                                                    <div class="no-notification" v-if="listNotification.length == 0 && !isLoaderBell">
+                                                    <div class="no-notification"
+                                                         v-if="listNotification.length == 0 && !isLoaderBell">
                                                         Không có thông báo
                                                     </div>
                                                     <ul v-else class="notification-list">
