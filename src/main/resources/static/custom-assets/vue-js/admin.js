@@ -172,6 +172,7 @@
         },
         searchUser(currentPage) {
             this.isShowLoader = true;
+            authenticationInstance.hidePreloader()
             if (currentPage == undefined || !currentPage) currentPage = 0;
             let request = {
                 'username': this.inputSearchUser.trim(),
@@ -186,7 +187,6 @@
 
             }).then(response => response.json())
                 .then((data) => {
-                    authenticationInstance.hidePreloader()
                     if (data != null && data.code == "000") {
                         this.listUser = data.data.content;
                         this.pagination = data.pagination;
@@ -323,6 +323,7 @@
         },
         searchPost(currentPage) {
             this.isShowLoader = true;
+            authenticationInstance.hidePreloader()
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -343,7 +344,6 @@
                 body: JSON.stringify(postRequestDTO),
             }).then(response => response.json())
                 .then((data) => {
-                    authenticationInstance.hidePreloader()
                     if (data != null && data.code == "000") {
                         this.listPost = data.data.content;
                         this.pagination = data.pagination;
@@ -403,6 +403,7 @@
         },
         searchReport(currentPage) {
             this.isShowLoader = true;
+            authenticationInstance.hidePreloader()
             if (currentPage == undefined || !currentPage) currentPage = 0;
             let reportRequestDTO = {
                 "landlordId": this.inputLandlordId.trim() == "" ? null : this.inputLandlordId,
@@ -418,7 +419,6 @@
                 body: JSON.stringify(reportRequestDTO),
             }).then(response => response.json())
                 .then((data) => {
-                    authenticationInstance.hidePreloader()
                     if (data != null && data.code == "000") {
                         this.listReport = data.data.content;
                         this.pagination = data.pagination;
@@ -512,6 +512,7 @@
         },
         getAllPaymentPackage(currentPage) {
             this.isShowLoader = true;
+            authenticationInstance.hidePreloader()
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -519,7 +520,6 @@
                 method: 'POST',
             }).then(response => response.json())
                 .then((data) => {
-                    authenticationInstance.hidePreloader()
                     if (data != null && data.code == "000") {
                         this.listPaymentPackage = data.data.content
                         this.pagination = data.pagination;
