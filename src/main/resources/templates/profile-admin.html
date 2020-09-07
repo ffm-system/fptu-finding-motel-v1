@@ -630,7 +630,7 @@
                                 <td><a id="myBtn">{{user.username}}</a></td>
                                 <td>{{user.displayName}}</td>
                                 <td>{{user.phoneNumber}}</td>
-                                <td>{{authenticationInstance.formatNumberToDisplay(user.landlordModel.amount)}}</td>
+                                <td>{{authenticationInstance.formatNumberToDisplay(!user.landlordModel.amount? 0 : user.landlordModel.amount)}}</td>
                             </tr>
                             </tbody>
                         </table>
