@@ -1,4 +1,4 @@
-var admin = new Vue({
+    var admin = new Vue({
     el: '#dataTable',
     data: {
         //variable
@@ -54,6 +54,7 @@ var admin = new Vue({
         listFilterDistance: [],
         selectedPost : null,
         selectedUser : null,
+        isShowLoader: true,
     },
     beforeMount() {
         this.task = sessionStorage.getItem("task")
@@ -170,6 +171,7 @@ var admin = new Vue({
             document.getElementById("modalBan").style.display = 'block';
         },
         searchUser(currentPage) {
+            this.isShowLoader = true;
             if (currentPage == undefined || !currentPage) currentPage = 0;
             let request = {
                 'username': this.inputSearchUser.trim(),
@@ -188,6 +190,7 @@ var admin = new Vue({
                     if (data != null && data.code == "000") {
                         this.listUser = data.data.content;
                         this.pagination = data.pagination;
+                        this.isShowLoader = false;
                     } else {
                         modalMessageInstance.message = data.message;
                         modalMessageInstance.showModal()
@@ -319,6 +322,7 @@ var admin = new Vue({
             return list[value];
         },
         searchPost(currentPage) {
+            this.isShowLoader = true;
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -343,6 +347,7 @@ var admin = new Vue({
                     if (data != null && data.code == "000") {
                         this.listPost = data.data.content;
                         this.pagination = data.pagination;
+                        this.isShowLoader = false;
                     } else {
                         modalMessageInstance.message = data.message;
                         modalMessageInstance.showModal()
@@ -397,6 +402,7 @@ var admin = new Vue({
             })
         },
         searchReport(currentPage) {
+            this.isShowLoader = true;
             if (currentPage == undefined || !currentPage) currentPage = 0;
             let reportRequestDTO = {
                 "landlordId": this.inputLandlordId.trim() == "" ? null : this.inputLandlordId,
@@ -416,6 +422,7 @@ var admin = new Vue({
                     if (data != null && data.code == "000") {
                         this.listReport = data.data.content;
                         this.pagination = data.pagination;
+                        this.isShowLoader = false;
                     } else {
                         modalMessageInstance.message = data.message;
                         modalMessageInstance.showModal()
@@ -456,6 +463,7 @@ var admin = new Vue({
             })
         },
         handleGetReport(post, user) {
+            this.isShowLoader = true;
             userTaskInstance.task = 11
             sessionStorage.setItem("task", 11)
             this.task = 11
@@ -493,6 +501,7 @@ var admin = new Vue({
                         }
                         this.listReport = listReport
                         this.pagination = data.pagination
+                        this.isShowLoader = false;
                     } else {
                         modalMessageInstance.message = data.message;
                         modalMessageInstance.showModal()
@@ -502,6 +511,7 @@ var admin = new Vue({
             })
         },
         getAllPaymentPackage(currentPage) {
+            this.isShowLoader = true;
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -513,6 +523,7 @@ var admin = new Vue({
                     if (data != null && data.code == "000") {
                         this.listPaymentPackage = data.data.content
                         this.pagination = data.pagination;
+                        this.isShowLoader = false;
                     } else {
                         modalMessageInstance.message = data.message;
                         modalMessageInstance.showModal()

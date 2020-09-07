@@ -185,6 +185,16 @@
                                                     <span>Thông báo</span>
                                                 </div>
                                                 <div class="notification-body">
+                                                    <div v-show="!isShowNotification" class="no-notification">
+                                                        <div class="loader">
+                                                            <div class="loader--dot"></div>
+                                                            <div class="loader--dot"></div>
+                                                            <div class="loader--dot"></div>
+                                                            <div class="loader--dot"></div>
+                                                            <div class="loader--dot"></div>
+                                                            <div class="loader--dot"></div>
+                                                        </div>
+                                                    </div>
                                                     <div class="no-notification" v-if="listNotification.length == 0">
                                                         Không có thông báo
                                                     </div>
@@ -201,13 +211,14 @@
                                                         </li>
                                                         <li v-if="!isLastPageNotify" class="read-more">
                                                             <div class="read-more-text">
-                                                                <a v-on:click.prevent="getListNotification()" href="">Xem thêm</a>
+                                                                <a v-on:click.prevent="getListNotification()" href="">Xem
+                                                                    thêm</a>
                                                             </div>
                                                         </li>
                                                     </ul>
-<!--                                                    <div v-if="!isLastPageNotify">-->
-<!--                                                        <a v-on:click.prevent="getListNotification()" href="">Xem thêm</a>-->
-<!--                                                    </div>-->
+                                                    <!--                                                    <div v-if="!isLastPageNotify">-->
+                                                    <!--                                                        <a v-on:click.prevent="getListNotification()" href="">Xem thêm</a>-->
+                                                    <!--                                                    </div>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -348,9 +359,9 @@
                         </div>
                         <div style="padding-left: 6px" class="footer-social footer-social2">
                             <a href="https://www.facebook.com/xichlo.thiensu/"><i class="fab fa-facebook-f"></i></a>
-<!--                            <a href="#"><i class="fab fa-twitter"></i></a>-->
+                            <!--                            <a href="#"><i class="fab fa-twitter"></i></a>-->
                             <a th:href="@{/}"><i style="padding-left: 0px!important;" class="fas fa-globe"></i></a>
-<!--                            <a href="#"><i class="fab fa-behance"></i></a>-->
+                            <!--                            <a href="#"><i class="fab fa-behance"></i></a>-->
                         </div>
 
                     </div>
@@ -373,24 +384,24 @@
                                 </i></li>
                             </ul>
                             <!-- Form -->
-<!--                            <div class="footer-form">-->
-<!--                                <div id="mc_embed_signup">-->
-<!--                                    <form target="_blank"-->
-<!--                                          action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"-->
-<!--                                          method="get" class="subscribe_form relative mail_part">-->
-<!--                                        <input type="email" name="email" id="newsletter-form-email"-->
-<!--                                               placeholder="Email Address" class="placeholder hide-on-focus"-->
-<!--                                               onfocus="this.placeholder = ''"-->
-<!--                                               onblur="this.placeholder = ' Email Address '">-->
-<!--                                        <div class="form-icon">-->
-<!--                                            <button type="submit" name="submit" id="newsletter-submit"-->
-<!--                                                    class="email_icon newsletter-submit button-contactForm"><img-->
-<!--                                                    src="assets/img/logo/form-iocn.jpg" alt=""></button>-->
-<!--                                        </div>-->
-<!--                                        <div class="mt-10 info"></div>-->
-<!--                                    </form>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                            <div class="footer-form">-->
+                            <!--                                <div id="mc_embed_signup">-->
+                            <!--                                    <form target="_blank"-->
+                            <!--                                          action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"-->
+                            <!--                                          method="get" class="subscribe_form relative mail_part">-->
+                            <!--                                        <input type="email" name="email" id="newsletter-form-email"-->
+                            <!--                                               placeholder="Email Address" class="placeholder hide-on-focus"-->
+                            <!--                                               onfocus="this.placeholder = ''"-->
+                            <!--                                               onblur="this.placeholder = ' Email Address '">-->
+                            <!--                                        <div class="form-icon">-->
+                            <!--                                            <button type="submit" name="submit" id="newsletter-submit"-->
+                            <!--                                                    class="email_icon newsletter-submit button-contactForm"><img-->
+                            <!--                                                    src="assets/img/logo/form-iocn.jpg" alt=""></button>-->
+                            <!--                                        </div>-->
+                            <!--                                        <div class="mt-10 info"></div>-->
+                            <!--                                    </form>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -839,7 +850,8 @@
                 </div>
                 <div class="infor-modal">
                     <p class="left-modal">Ngày sinh</p>
-                    <input :value="authenticationInstance.formatDate(renterInfo.dob, true)" class="right-modal rounded-pill border-0 shadow-sm"
+                    <input :value="authenticationInstance.formatDate(renterInfo.dob, true)"
+                           class="right-modal rounded-pill border-0 shadow-sm"
                            type="text" disabled/>
                 </div>
                 <div class="infor-modal">
