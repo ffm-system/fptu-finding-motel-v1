@@ -172,6 +172,7 @@
         },
         searchUser(currentPage) {
             this.isShowLoader = true;
+            this.listUser = []
             if (currentPage == undefined || !currentPage) currentPage = 0;
             let request = {
                 'username': this.inputSearchUser.trim(),
