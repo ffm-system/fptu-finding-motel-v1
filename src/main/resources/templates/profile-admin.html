@@ -103,27 +103,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-show="isShowLoader" v-for="n in 4">
-                                <th scope="row">
-                                    <div class="placeholder-content-preload h20"></div>
-                                </th>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
+                            <tr v-show="isShowLoader" v-for="n in pagination.sizePage != null ? pagination.sizePage : 5">
+                                <td scope="row" v-for="i in 6">
                                     <div class="placeholder-content-preload h20"></div>
                                 </td>
                             </tr>
-                            <tr v-for="(user, index) in listUser">
+                            <tr v-show="!isShowLoader" v-for="(user, index) in listUser">
                                 <th scope="row">{{listUser.indexOf(user) + 1}}</th>
                                 <td><a id="myBtn">{{user.username}}</a></td>
                                 <td>{{user.displayName}}</td>
@@ -246,33 +231,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-show="isShowLoader" v-for="n in 4">
-                                <th scope="row">
-                                    <div class="placeholder-content-preload h20"></div>
-                                </th>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
+                            <tr v-show="isShowLoader" v-for="n in pagination.sizePage != null ? pagination.sizePage : 5">
+                                <td scope="row" v-for="i in 8">
                                     <div class="placeholder-content-preload h20"></div>
                                 </td>
                             </tr>
-                            <tr v-for="report in listReport">
+                            <tr v-show="!isShowLoader" v-for="report in listReport">
                                 <th scope="row">{{listReport.indexOf(report) + 1}}</th>
                                 <td>
                                     <a v-bind:href="'/post-detail?id=' + report.postReport.id">{{report.postReport.title}}</a>
@@ -460,45 +424,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-show="isShowLoader" v-for="n in 4">
-                                <th scope="row">
-                                    <div class="placeholder-content-preload h20"></div>
-                                </th>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
+                            <tr v-show="isShowLoader" v-for="n in pagination.sizePage != null ? pagination.sizePage : 5">
+                                <td scope="row" v-for="i in 12">
                                     <div class="placeholder-content-preload h20"></div>
                                 </td>
                             </tr>
-                            <tr v-for="(post, index) in listPost">
+                            <tr v-show="!isShowLoader" v-for="(post, index) in listPost">
                                 <td class="col-first" scope="row">{{listPost.indexOf(post) + 1}}</td>
                                 <td>
                                     <i v-bind:class="{disable : !post.banAvailable}"
@@ -593,30 +524,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-show="isShowLoader" v-for="n in 4">
-                                <th scope="row">
-                                    <div class="placeholder-content-preload h20"></div>
-                                </th>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
+                            <tr v-show="isShowLoader" v-for="n in pagination.sizePage != null ? pagination.sizePage : 5">
+                                <td scope="row" v-for="i in 7">
                                     <div class="placeholder-content-preload h20"></div>
                                 </td>
                             </tr>
-                            <tr v-for="(package, index) in listPaymentPackage">
+                            <tr v-show="!isShowLoader" v-for="(package, index) in listPaymentPackage">
                                 <th scope="row" v-text="index + 1"></th>
                                 <td v-text="package.packageName"></td>
                                 <td v-text="package.duration + ' Tháng'"></td>
@@ -707,21 +620,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-show="isShowLoader" v-for="n in 4">
-                                <th scope="row">
-                                    <div class="placeholder-content-preload h20"></div>
-                                </th>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
-                                    <div class="placeholder-content-preload h20"></div>
-                                </td>
-                                <td>
+                            <tr v-show="isShowLoader" v-for="n in pagination.sizePage != null ? pagination.sizePage : 5">
+                                <td scope="row" v-for="i in 4">
                                     <div class="placeholder-content-preload h20"></div>
                                 </td>
                             </tr>
-                            <tr class="row-user" data-toggle="tooltip" data-html="true" title="Nạp tiền cho chủ trọ"
+                            <tr v-show="!isShowLoader" class="row-user" data-toggle="tooltip" data-html="true" title="Nạp tiền cho chủ trọ"
                                 v-for="(user, index) in listUser" v-on:click="showModalAddMoney(user, index)">
                                 <td><a id="myBtn">{{user.username}}</a></td>
                                 <td>{{user.displayName}}</td>
