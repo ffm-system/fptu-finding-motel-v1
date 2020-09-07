@@ -10,6 +10,7 @@ var authenticationInstance = new Vue({
         listNotification : [],
         firstPageNotifies : -1,
         isLastPageNotify : true,
+        isLoaderBell: false,
     },
     methods: {
         logout(){
@@ -82,8 +83,9 @@ var authenticationInstance = new Vue({
             }, time);
         },
         showNotifications(){
+            this.isLoaderBell = true;
             if(!this.isShowNotification && this.listNotification.length == 0){
-                this.getListNotification()
+                this.getListNotification();
             }
             document.addEventListener("click", function (event) {
                 if (authenticationInstance.isShowNotification){
@@ -156,6 +158,7 @@ var authenticationInstance = new Vue({
                             this.listNotification.push(notify)
                         }
                         this.isLastPageNotify = data.isLastPage !== undefined && data.isLastPage !== null && data.isLastPage == true ? true : false
+                        this.isLoaderBell = false;
                     }
                 }).catch(error => {
                 console.log(error);
