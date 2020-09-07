@@ -342,9 +342,9 @@ var basicInfoInstance = new Vue({
     methods: {
         handlePostNewRoom() {
             if (this.userInfo.banned) {
-                modalMessageInstance.message = "Tài khoản của bạn bị tạm khóa đến " + this.userInfo.unBanDate + "</br>" +
+                modalMessageInstance.message = "Tài khoản của bạn bị tạm khóa đến <b>" + this.userInfo.unBanDate + "</b></br>" +
                     "Tất cả bài đăng sẽ bị ẩn " + "</br>" +
-                    "Chức năng Đăng Tin và Nạp Tiền bị khóa";
+                    "Chức năng <b>Đăng Tin</b> và <b>Nạp Tiền</b> bị khóa";
                 modalMessageInstance.showModal()
             } else {
                 sessionStorage.setItem("task", 13)
@@ -353,9 +353,9 @@ var basicInfoInstance = new Vue({
         },
         handlePayment() {
             if (this.userInfo.banned) {
-                modalMessageInstance.message = "Tài khoản của bạn bị tạm khóa đến " + this.userInfo.unBanDate + "</br>" +
+                modalMessageInstance.message = "Tài khoản của bạn bị tạm khóa đến <b>" + this.userInfo.unBanDate + "</b></br>" +
                     "Tất cả bài đăng sẽ bị ẩn " + "</br>" +
-                    "Chức năng Đăng Tin và Nạp Tiền bị khóa";
+                    "Chức năng <b>Đăng Tin</b> và <b>Nạp Tiền</b> bị khóa";
                 modalMessageInstance.showModal()
             } else {
                 sessionStorage.setItem("task", 8);
