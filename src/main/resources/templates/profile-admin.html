@@ -103,6 +103,26 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr v-show="isShowLoader" v-for="n in 4">
+                                <th scope="row">
+                                    <div class="placeholder-content-preload h20"></div>
+                                </th>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                            </tr>
                             <tr v-for="(user, index) in listUser">
                                 <th scope="row">{{listUser.indexOf(user) + 1}}</th>
                                 <td><a id="myBtn">{{user.username}}</a></td>
@@ -162,7 +182,7 @@
                                 </li>
                             </ul>
                         </nav>
-                        <div v-if="listUser.length <= 0">Không có người dùng nào.</div>
+                        <div v-if="listUser.length <= 0 && !isShowLoader">Không có người dùng nào.</div>
                     </div>
                 </div>
 
@@ -226,9 +246,37 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr v-show="isShowLoader" v-for="n in 4">
+                                <th scope="row">
+                                    <div class="placeholder-content-preload h20"></div>
+                                </th>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                            </tr>
                             <tr v-for="report in listReport">
                                 <th scope="row">{{listReport.indexOf(report) + 1}}</th>
-                                <td><a v-bind:href="'/post-detail?id=' + report.postReport.id">{{report.postReport.title}}</a></td>
+                                <td>
+                                    <a v-bind:href="'/post-detail?id=' + report.postReport.id">{{report.postReport.title}}</a>
+                                </td>
                                 <td>{{report.postReport.landlord.username}}</td>
                                 <td>{{authenticationInstance.formatDate(report.reportDate)}}</td>
                                 <td>{{report.renterReport.username}}</td>
@@ -239,7 +287,7 @@
                                        title="Chi tiết báo cáo" @click="showModalReportDetail(report.id)"
                                        id="myIcon_viewReport"></i>
                                     <i @click="showModalConfirmDelete(report.id, 'report')"
-                                       class="fas fa-trash-alt"data-toggle="tooltip"
+                                       class="fas fa-trash-alt" data-toggle="tooltip"
                                        data-html="true"
                                        title="Xóa báo cáo"> </i>
                                 </td>
@@ -273,7 +321,7 @@
                                 </li>
                             </ul>
                         </nav>
-                        <div v-if="listReport.length <= 0">Không có báo cáo nào.</div>
+                        <div v-if="listReport.length <= 0 && !isShowLoader">Không có báo cáo nào.</div>
                     </div>
                 </div>
 
@@ -294,7 +342,8 @@
                                         <form action="#">
                                             <select v-model="postType">
                                                 <option value="0">Tất cả</option>
-                                                <option v-for="type in listTypePost" v-bind:value="type.id" v-text="type.name"></option>
+                                                <option v-for="type in listTypePost" v-bind:value="type.id"
+                                                        v-text="type.name"></option>
                                             </select>
                                         </form>
                                     </div>
@@ -309,7 +358,9 @@
                                         <form action="#">
                                             <select v-model="postPrice">
                                                 <option value="0">Tất cả</option>
-                                                <option v-for="filterPrice in listFilterPrice" v-bind:value="filterPrice.id" v-text="filterPrice.displayText"></option>
+                                                <option v-for="filterPrice in listFilterPrice"
+                                                        v-bind:value="filterPrice.id"
+                                                        v-text="filterPrice.displayText"></option>
                                             </select>
                                         </form>
                                     </div>
@@ -324,7 +375,9 @@
                                         <form action="#">
                                             <select v-model="postSquare">
                                                 <option value="0">Tất cả</option>
-                                                <option v-for="filterSquare in listFilterSquare"  v-bind:value="filterSquare.id" v-html="filterSquare.displayText"></option>
+                                                <option v-for="filterSquare in listFilterSquare"
+                                                        v-bind:value="filterSquare.id"
+                                                        v-html="filterSquare.displayText"></option>
                                             </select>
                                         </form>
                                     </div>
@@ -339,7 +392,9 @@
                                         <form action="#">
                                             <select v-model="postDistance">
                                                 <option value="0">Tất cả</option>
-                                                <option v-for="filterDistance in listFilterDistance" v-bind:value="filterDistance.id" v-text="filterDistance.displayText"></option>
+                                                <option v-for="filterDistance in listFilterDistance"
+                                                        v-bind:value="filterDistance.id"
+                                                        v-text="filterDistance.displayText"></option>
                                             </select>
                                         </form>
                                     </div>
@@ -405,6 +460,44 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr v-show="isShowLoader" v-for="n in 4">
+                                <th scope="row">
+                                    <div class="placeholder-content-preload h20"></div>
+                                </th>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                            </tr>
                             <tr v-for="(post, index) in listPost">
                                 <td class="col-first" scope="row">{{listPost.indexOf(post) + 1}}</td>
                                 <td>
@@ -443,9 +536,10 @@
                             </tbody>
                         </table>
 
-                        <div v-if="listPost.length <= 0">Không có bài đăng nào.</div>
+                        <div v-if="listPost.length <= 0 && !isShowLoader">Không có bài đăng nào.</div>
                     </div>
-                    <nav class="nav-paging" v-if="pagination.totalPages != 1 && listPost.length > 0" aria-label="Page navigation">
+                    <nav class="nav-paging" v-if="pagination.totalPages != 1 && listPost.length > 0"
+                         aria-label="Page navigation">
                         <ul class="pagination justify-content-center">
                             <li v-bind:class="{disabled : !pagination.hasPrevious}"
                                 class="page-item">
@@ -499,6 +593,29 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr v-show="isShowLoader" v-for="n in 4">
+                                <th scope="row">
+                                    <div class="placeholder-content-preload h20"></div>
+                                </th>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                            </tr>
                             <tr v-for="(package, index) in listPaymentPackage">
                                 <th scope="row" v-text="index + 1"></th>
                                 <td v-text="package.packageName"></td>
@@ -556,7 +673,7 @@
                                 </li>
                             </ul>
                         </nav>
-                        <div v-if="listPaymentPackage.length <= 0">Không có gói nào.</div>
+                        <div v-if="listPaymentPackage.length <= 0 && !isShowLoader">Không có gói nào.</div>
                     </div>
                 </div>
 
@@ -590,6 +707,20 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr v-show="isShowLoader" v-for="n in 4">
+                                <th scope="row">
+                                    <div class="placeholder-content-preload h20"></div>
+                                </th>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                                <td>
+                                    <div class="placeholder-content-preload h20"></div>
+                                </td>
+                            </tr>
                             <tr class="row-user" data-toggle="tooltip" data-html="true" title="Nạp tiền cho chủ trọ"
                                 v-for="(user, index) in listUser" v-on:click="showModalAddMoney(user, index)">
                                 <td><a id="myBtn">{{user.username}}</a></td>
@@ -599,7 +730,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div v-if="listUser.length <= 0">Không có chủ trọ nào.</div>
+                        <div v-if="listUser.length <= 0 && !isShowLoader">Không có chủ trọ nào.</div>
                         <nav v-if="pagination.totalPages != 1 && listUser.length > 0" aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
                                 <li v-bind:class="{disabled : !pagination.hasPrevious}"
@@ -707,18 +838,21 @@
                             </div>
                             <div v-if="userDetail.role.roleName == 'RENTER'" class="infor-modal">
                                 <p class="left-modal">Ngày sinh:</p>
-                                <input :value="authenticationInstance.formatDate(userDetail.renterModel.dob, true)" class="right-modal rounded-pill border-0 shadow-sm"
+                                <input :value="authenticationInstance.formatDate(userDetail.renterModel.dob, true)"
+                                       class="right-modal rounded-pill border-0 shadow-sm"
                                        type="text" disabled/>
                             </div>
                             <div v-if="userDetail.role.roleName == 'RENTER'" class="infor-modal">
                                 <p class="left-modal">Nghề nghiệp:</p>
-                                <input :value="userDetail.renterModel.career" class="right-modal rounded-pill border-0 shadow-sm"
+                                <input :value="userDetail.renterModel.career"
+                                       class="right-modal rounded-pill border-0 shadow-sm"
                                        type="text" disabled/>
                             </div>
                             <div v-if="userDetail.role.roleName == 'RENTER'" class="infor-modal">
                                 <p class="left-modal">Giới tính:</p>
-                                <input :value="userDetail.renterModel.gender ? 'Nam' : 'Nữ'" class="right-modal rounded-pill border-0 shadow-sm"
-                                       type="text"  disabled/>
+                                <input :value="userDetail.renterModel.gender ? 'Nam' : 'Nữ'"
+                                       class="right-modal rounded-pill border-0 shadow-sm"
+                                       type="text" disabled/>
                             </div>
                             <div class="infor-modal">
                                 <p class="left-modal">Vai trò:</p>
@@ -732,25 +866,25 @@
                                        class="right-modal rounded-pill border-0 shadow-sm"
                                        type="text" disabled/>
                             </div>
-<!--                            <div v-if="userDetail.role == 'LANDLORD'" class="infor-modal-table">-->
-<!--                                <p class="left-modal">Danh sách bài đăng:</p>-->
-<!--                                <table class="table">-->
-<!--                                    <thead class="thead-light">-->
-<!--                                    <tr>-->
-<!--                                        <th scope="col">STT</th>-->
-<!--                                        <th scope="col">Tên bài đăng</th>-->
-<!--                                        <th scope="col">Ngày đăng</th>-->
-<!--                                    </tr>-->
-<!--                                    </thead>-->
-<!--                                    <tbody>-->
-<!--                                    <tr>-->
-<!--                                        <td>1</td>-->
-<!--                                        <td>phòng 1</td>-->
-<!--                                        <td>20-06-2020</td>-->
-<!--                                    </tr>-->
-<!--                                    </tbody>-->
-<!--                                </table>-->
-<!--                            </div>-->
+                            <!--                            <div v-if="userDetail.role == 'LANDLORD'" class="infor-modal-table">-->
+                            <!--                                <p class="left-modal">Danh sách bài đăng:</p>-->
+                            <!--                                <table class="table">-->
+                            <!--                                    <thead class="thead-light">-->
+                            <!--                                    <tr>-->
+                            <!--                                        <th scope="col">STT</th>-->
+                            <!--                                        <th scope="col">Tên bài đăng</th>-->
+                            <!--                                        <th scope="col">Ngày đăng</th>-->
+                            <!--                                    </tr>-->
+                            <!--                                    </thead>-->
+                            <!--                                    <tbody>-->
+                            <!--                                    <tr>-->
+                            <!--                                        <td>1</td>-->
+                            <!--                                        <td>phòng 1</td>-->
+                            <!--                                        <td>20-06-2020</td>-->
+                            <!--                                    </tr>-->
+                            <!--                                    </tbody>-->
+                            <!--                                </table>-->
+                            <!--                            </div>-->
                         </div>
                         <div class="modal-footer">
                             <button class="btn-hover btn-default" @click="closeModalUserDetail">Xác Nhận</button>
@@ -843,7 +977,8 @@
                 <!--                    modal nạp tiền -->
                 <div id="modalAddMoney" class="modal">
                     <!-- Modal content -->
-                    <div class="view-information" v-if="selectedLandlord != null && selectedLandlord.landlordModel != null">
+                    <div class="view-information"
+                         v-if="selectedLandlord != null && selectedLandlord.landlordModel != null">
                         <div class="modal-header">
                             <h2>Nạp tiền</h2>
                             <span @click="closeModalAddMoney" class="close">&times;</span>
