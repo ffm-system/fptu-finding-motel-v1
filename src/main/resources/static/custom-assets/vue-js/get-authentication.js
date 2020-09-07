@@ -286,8 +286,16 @@ var authenticationInstance = new Vue({
                     sessionStorage.setItem("userInfo", JSON.stringify(data.userInfo))
                     this.authenticated = true
                     this.getNotificationNumber()
+                    if(window.location.href.includes("quan-ly-he-thong")
+                        || window.location.href.includes("dang-tin")
+                        || window.location.href.includes("quan-ly-tai-khoan")
+                        || window.location.href.includes("quan-ly-bai-dang")
+                        || window.location.href.includes("nap-tien")){
+                        this.hidePreloader()
+                    }
+
                     this.removeNotifications()
-                    this.hidePreloader()
+
 
                     if(window.location.href.includes("/dang-nhap")){
                         window.location.href = "/"
