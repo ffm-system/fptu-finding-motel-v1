@@ -22,6 +22,7 @@ var postDetailInstance = new Vue({
         validateMessage : "",
         showMsg : false,
         roomSelected : null,
+        isShowRoomLoader : true,
     },
     beforeMount() {
         this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -396,12 +397,13 @@ var postDetailInstance = new Vue({
             })
         },
         getListRoom(post) {
-
+            this.isShowRoomLoader = true
             fetch("/api-get-list-room-of-post?postId=" + post.id, {
                 method: 'POST',
             }).then(response => response.json())
                 .then((data) => {
                     if(data != null && data.code == "000"){
+                        this.isShowRoomLoader = false
                         this.listRoomOfPost = data.data
                     }
 

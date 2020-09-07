@@ -135,7 +135,7 @@
                                 </div>
                             </div>
 
-                            <div class="fill-information col-lg-12" v-if="(listRoom != undefined && listRoom.length > 0) || (listRoomRequest != undefined && listRoomRequest.length > 0)">
+                            <div class="fill-information col-lg-12" v-show="(listRoom != undefined && listRoom.length > 0) || (editMode)">
                                 <div class="title">
                                     <h4>Trạng thái các phòng<span class="require-text">*</span>
                                     </h4>
@@ -150,7 +150,16 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(room, index) in editMode ? listRoomRequest : listRoom">
+                                        <tr v-show="isShowLoader" v-for="index in 3">
+                                            <td v-for="col in 3">
+                                                <div class="placeholder-content-wrapper">
+                                                    <!-- Placeholder Content -->
+                                                    <div class="placeholder-content">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr v-show="!isShowLoader" v-for="(room, index) in editMode ? listRoomRequest : listRoom">
                                             <th scope="row" v-text="index + 1"></th>
                                             <th scope="row" v-text="editMode ? room.name : room.roomName"></th>
                                             <th scope="row">
@@ -357,7 +366,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="payment in listPayment">
+                            <tr v-show="isShowLoader" v-for="index in pagination.sizePage != null ? pagination.sizePage : 5">
+                                <td v-for="col in 5">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr v-show="!isShowLoader" v-for="payment in listPayment">
                                 <td v-text="authenticationInstance.formatDate(payment.payDate)"></td>
                                 <td v-text="authenticationInstance.formatNumberToDisplay(payment.amount) + ' VNĐ'"></td>
                                 <td v-text="payment.paymentMethod"></td>
@@ -393,7 +411,7 @@
                                 </li>
                             </ul>
                         </nav>
-                        <div v-if="listPayment.length == 0">Không có lịch sử nạp tiền nào.</div>
+                        <div v-if="listPayment.length == 0 && !isShowLoader">Không có lịch sử nạp tiền nào.</div>
                     </div>
                 </div>
 
@@ -416,7 +434,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(post, index) in listPost">
+                            <tr v-show="isShowLoader" v-for="index in pagination.sizePage != null ? pagination.sizePage : 5">
+                                <td v-for="col in 7">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr v-show="!isShowLoader" v-for="(post, index) in listPost">
 
                                 <th scope="row" v-text="index + 1"></th>
                                 <td><a v-bind:href="'/post-detail?id=' + post.id" v-text="post.title" target="_blank"></a></td>
@@ -468,7 +495,7 @@
                                 </li>
                             </ul>
                         </nav>
-                        <div v-if="listPost.length == 0">Không có bài đăng nào.</div>
+                        <div v-if="listPost.length == 0 && !isShowLoader">Không có bài đăng nào.</div>
                     </div>
                 </div>
 
@@ -489,7 +516,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="paymentPost in listPaymentPost">
+                            <tr v-show="isShowLoader" v-for="index in pagination.sizePage != null ? pagination.sizePage : 5">
+                                <td v-for="col in 5">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr v-show="!isShowLoader" v-for="paymentPost in listPaymentPost">
                                 <td><a v-bind:href="'/post-detail?id=' + paymentPost.postPayment.id" v-text="paymentPost.postPayment.title"></a> </td>
                                 <td v-text="authenticationInstance.formatDate(paymentPost.payDate)"></td>
                                 <td v-text="paymentPost.paymentPackage.packageName"></td>
@@ -526,7 +562,7 @@
                                 </li>
                             </ul>
                         </nav>
-                        <div v-if="listPaymentPost.length == 0">Không có lịch sử thanh toán nào.</div>
+                        <div v-if="listPaymentPost.length == 0 && !isShowLoader">Không có lịch sử thanh toán nào.</div>
                     </div>
                 </div>
                 <!-- Quản lý phòng -->
@@ -549,7 +585,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <template v-for="(room, index) in listRoomRequest">
+                            <tr v-show="isShowLoader" v-for="index in pagination.sizePage != null ? pagination.sizePage : 5">
+                                <td v-for="col in 7">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content">
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            <template v-show="!isShowLoader" v-for="(room, index) in listRoomRequest">
                                 <tr>
                                     <td>
                                         <i class="fas fa-angle-double-down" v-if="!room.openCollapse" v-on:click="getListRequestByRoom(room, index)" v-bind:class="{invisible: room.requestNumber == 0}"></i>
@@ -583,7 +629,16 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr v-for="(request, index) in room.listRentalRequest">
+                                            <tr v-show="isShowLoaderChildTable" v-for="index in 5">
+                                                <td v-for="col in 6">
+                                                    <div class="placeholder-content-wrapper">
+                                                        <!-- Placeholder Content -->
+                                                        <div class="placeholder-content">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr v-show="!isShowLoaderChildTable" v-for="(request, index) in room.listRentalRequest">
                                                 <td v-text="index + 1"></td>
                                                 <td>
                                                     <a class="pointer-enable" v-on:click="getRenterInfo(request.rentalRenter.username, true)" v-text="request.rentalRenter.username"></a>
@@ -643,10 +698,10 @@
                         <h1 class="title-name uppercase" v-text="task == 5 ? 'Quản lý yêu cầu' : 'Quản lý phòng'"></h1>
                     </div>
                     <div class="information-detail">
-                        <div v-if="listRoomRequest == null || listRoomRequest.length == 0">
+                        <div v-show="(listRoomRequest == null || listRoomRequest.length == 0) && !isShowLoader">
                             <span>Không có yêu cầu thuê trọ nào</span>
                         </div>
-                        <table v-else class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover">
                             <thead class="thead-light">
                             <tr v-if="task == 5">
                                 <th  width="2%"></th>
@@ -666,8 +721,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <template v-for="(room, index) in listRoomRequest">
-                                <tr>
+                            <tr v-show="isShowLoader" v-for="index in pagination.sizePage != null ? pagination.sizePage : 1">
+                                <td v-for="col in task == 5 ? 5 : 7">
+                                    <div class="placeholder-content-wrapper">
+                                        <!-- Placeholder Content -->
+                                        <div class="placeholder-content">
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            <template v-show="!isShowLoader" v-for="(room, index) in listRoomRequest">
+                                <tr class="row-table-room">
                                     <td>
                                         <i class="fas fa-angle-double-down" v-if="!room.openCollapse" v-on:click="getListRequestByRoom(room, index, 7)" v-bind:class="{invisible: room.requestNumber == 0}"></i>
                                         <i class="fas fa-angle-double-right" v-else v-on:click="getListRequestByRoom(room, index, 7)" v-bind:class="{invisible: room.requestNumber == 0}"></i>

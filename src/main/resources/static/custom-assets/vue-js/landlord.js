@@ -49,6 +49,9 @@ var landlordInstance = new Vue({
         vnpayContent: "",
         vnpayBank: "",
         regexVnpayContent: /^[a-zA-Z0-9.,_\s]*$/,
+
+        isShowLoader: true,
+        isShowLoaderChildTable : true,
     },
     created(){
         let previousUrl = document.referrer
@@ -89,6 +92,7 @@ var landlordInstance = new Vue({
         }else if(this.task == 4){
             let profileUser = document.getElementById("user-manager-content")
             profileUser.classList.add("invisible")
+            authenticationInstance.hidePreloader()
             this.viewListPost()
             this.getInitNewPost()
         }else if(this.task == 6){
@@ -171,6 +175,8 @@ var landlordInstance = new Vue({
             modalConfirmInstance.showModal()
         },
         getHistoryPaymentPost(currentPage){
+            this.isShowLoader = true
+            authenticationInstance.hidePreloader()
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -187,8 +193,8 @@ var landlordInstance = new Vue({
 
             }).then(response => response.json())
                 .then((data) => {
-                    console.log(data);
                     if(data != null && data.code == "000"){
+                        this.isShowLoader = false
                         this.listPaymentPost = data.data
                         this.pagination = data.pagination
                     }else {
@@ -196,7 +202,6 @@ var landlordInstance = new Vue({
                         modalMessageInstance.message = data.message;
                         modalMessageInstance.showModal()
                     }
-                    authenticationInstance.hidePreloader()
                 }).catch(error => {
                 console.log(error);
             })
@@ -349,6 +354,7 @@ var landlordInstance = new Vue({
 
         },
         viewListPost(currentPage){
+            this.isShowLoader = true
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -364,12 +370,11 @@ var landlordInstance = new Vue({
 
             }).then(response => response.json())
                 .then((data) => {
-                    console.log(data);
                     if(data != null && data.code == "000"){
+                        this.isShowLoader = false
                         this.listPost = data.data
                         this.pagination = data.pagination
                     }
-                    authenticationInstance.hidePreloader()
                 }).catch(error => {
                 console.log(error);
             })
@@ -460,6 +465,8 @@ var landlordInstance = new Vue({
             })
         },
         getListRoomByPost(postId){
+            this.isShowLoader = true
+            this.listRoomRequest = []
             let request = {
                 'postId' : postId,
                 'roomId' : null,
@@ -473,6 +480,8 @@ var landlordInstance = new Vue({
 
         },
         getListRoomPaging(currentPage){
+            this.isShowLoader = true
+            this.listRoomRequest = []
             if(this.task == 15){
                 let request = {
                     'postId' : this.selectedPost.id,
@@ -490,6 +499,7 @@ var landlordInstance = new Vue({
             }
         },
         getListRoom(request, currentPage){
+            authenticationInstance.hidePreloader()
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -503,8 +513,8 @@ var landlordInstance = new Vue({
             fetch("/api-get-rooms?currentPage=" + currentPage, options)
                 .then(response => response.json())
                 .then((data) => {
-                    authenticationInstance.hidePreloader()
                     if(data != null && data.code == '000'){
+                        this.isShowLoader = false
                         this.listRoomRequest = data.data
                         this.pagination = data.pagination
                         if(this.task == 17){
@@ -542,6 +552,8 @@ var landlordInstance = new Vue({
             })
         },
         getListRoomProcessingRequest(){
+            this.isShowLoader = true
+            this.listRoomRequest = []
             let request = {
                 'statusId' : 7,
                 'postId' : null,
@@ -569,6 +581,7 @@ var landlordInstance = new Vue({
                 this.$set(this.listRoomRequest, index, room)
                 return
             }
+            this.isShowLoaderChildTable = true
             let request = {
                 'roomId' : room.id,
                 'statusId' : statusId,
@@ -584,8 +597,8 @@ var landlordInstance = new Vue({
             fetch("/api-get-requests-by-room", options)
                 .then(response => response.json())
                 .then((data) => {
-                    console.log(data);
                     if(data != null && data.code == '000'){
+                        this.isShowLoaderChildTable = false
                         room.listRentalRequest = data.data
                         room.openCollapse = !room.openCollapse
                         this.$set(this.listRoomRequest, index, room)
@@ -1260,6 +1273,8 @@ var landlordInstance = new Vue({
             this.$http.get
         },
         getHistoryPayment(currentPage){
+            authenticationInstance.hidePreloader()
+            this.isShowLoader = true
             if (currentPage === undefined || !currentPage) {
                 currentPage = 0;
             }
@@ -1276,6 +1291,7 @@ var landlordInstance = new Vue({
             .then(response => response.json())
             .then((data) => {
                 if (data != null && data.code == "000") {
+                    this.isShowLoader = false
                     this.listPayment = data.data
                     this.pagination = data.pagination
                 }else {
@@ -1283,7 +1299,6 @@ var landlordInstance = new Vue({
                     modalMessageInstance.message = data.message;
                     modalMessageInstance.showModal()
                 }
-                authenticationInstance.hidePreloader()
             })
         },
         checkStatusAndSavePayment(){
