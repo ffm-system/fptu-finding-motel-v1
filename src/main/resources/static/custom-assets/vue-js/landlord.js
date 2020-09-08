@@ -136,8 +136,6 @@ var landlordInstance = new Vue({
                 && sessionStorage.getItem("momo-check") != null
                 && sessionStorage.getItem("momo-check") == "1"){
                 this.checkStatusAndSavePayment()
-            }else {
-                authenticationInstance.hidePreloader()
             }
         }
 
@@ -292,6 +290,8 @@ var landlordInstance = new Vue({
             }else {
                 if(this.editMode){
                     this.showMsgModal = false
+                }else if(this.showMsg && !this.editMode && this.validateMessage == "Số tiền trong tài khoản không đủ"){
+                    this.showMsg = false
                 }
             }
 
