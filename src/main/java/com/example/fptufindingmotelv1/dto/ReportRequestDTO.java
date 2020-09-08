@@ -10,4 +10,6 @@ public class ReportRequestDTO {
     private String postTitle;
     private String landlordId;
     private Long statusReport;
+    private boolean reportUser;
+    private boolean reportPost;
 }

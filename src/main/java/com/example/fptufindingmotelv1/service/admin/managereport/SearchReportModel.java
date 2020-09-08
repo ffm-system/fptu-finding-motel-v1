@@ -7,6 +7,7 @@ import com.example.fptufindingmotelv1.model.ReportModel;
 import com.example.fptufindingmotelv1.model.StatusModel;
 import com.example.fptufindingmotelv1.repository.ReportRepository;
 import com.example.fptufindingmotelv1.repository.StatusRepository;
+import com.example.fptufindingmotelv1.untils.Constant;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,9 +69,21 @@ public class SearchReportModel implements SearchReportService {
     @Override
     public JSONObject searchReport(ReportRequestDTO reportRequestDTO, Pageable pageable) {
         try {
-            Page<ReportModel> reportModels = reportRepository.searchReport(reportRequestDTO.getLandlordId(),
-                    reportRequestDTO.getRenterId(), reportRequestDTO.getPostTitle(),
-                    reportRequestDTO.getStatusReport(), pageable);
+            Page<ReportModel> reportModels;
+            if(reportRequestDTO.getLandlordId() != null && reportRequestDTO.isReportUser()){
+                reportModels = reportRepository.getReportByUserAndPost(reportRequestDTO.getLandlordId(),
+                        reportRequestDTO.getRenterId(), reportRequestDTO.getPostTitle(),
+                        Constant.STATUS_REPORT_PROCESSING, Constant.STATUS_REPORT_PROCESSED_POST, pageable);
+            }else if(reportRequestDTO.getPostTitle() != null && reportRequestDTO.isReportPost()){
+                reportModels = reportRepository.getReportByUserAndPost(reportRequestDTO.getLandlordId(),
+                        reportRequestDTO.getRenterId(), reportRequestDTO.getPostTitle(),
+                        Constant.STATUS_REPORT_PROCESSING, Constant.STATUS_REPORT_PROCESSED_USER, pageable);
+            }else {
+                reportModels = reportRepository.searchReport(reportRequestDTO.getLandlordId(),
+                        reportRequestDTO.getRenterId(), reportRequestDTO.getPostTitle(),
+                        reportRequestDTO.getStatusReport(), pageable);
+            }
+
 //            ArrayList<ReportResponseDTO> reportResponseDTOS = new ArrayList<>();
 //            for (ReportModel report : reportModels.getContent()) {
 //                ReportResponseDTO responseDTO = new ReportResponseDTO(report);

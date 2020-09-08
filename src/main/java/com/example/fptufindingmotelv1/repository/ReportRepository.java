@@ -22,6 +22,19 @@ public interface ReportRepository extends JpaRepository<ReportModel, String> {
             "")
     Page<ReportModel> searchReport(String landlordId, String renterId, String postTitle, Long statusId, Pageable pageable);
 
+    @Query(value = "select new ReportModel(rp.id, rp.content, rp.reportDate, p.id, p.title, " +
+            "p.landlord.username, rp.renterReport.username, s.id, s.status) from ReportModel rp " +
+            "join PostModel p on rp.postReport.id = p.id " +
+            "join StatusModel s on rp.statusReport.id = s.id " +
+            "where 1 = 1" +
+            "and (:landlordId is null or rp.postReport.landlord.username = :landlordId)" +
+            "and (:renterId is null or rp.renterReport.username like %:renterId%)" +
+            "and (:postTitle is null or rp.postReport.title = :postTitle)" +
+            "and (rp.statusReport.id = :status1 or rp.statusReport.id = :status2) " +
+            "")
+    Page<ReportModel> getReportByUserAndPost(String landlordId, String renterId, String postTitle,
+                                             Long status1, Long status2, Pageable pageable);
+
     @Transactional
     @Modifying
     @Query(value = "delete r from REPORT r " +

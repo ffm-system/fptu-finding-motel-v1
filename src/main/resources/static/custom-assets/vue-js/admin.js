@@ -55,6 +55,10 @@
         selectedPost : null,
         selectedUser : null,
         isShowLoader: true,
+        reportUser: false,
+        reportPost: false,
+        selectedPostReport: null,
+        selectedUserReport: null,
     },
     beforeMount() {
         this.task = sessionStorage.getItem("task")
@@ -400,7 +404,18 @@
                 console.log(error);
             })
         },
+        handleSearchReport(){
+            this.selectedUserReport = null
+            this.selectedPostReport = null
+            this.reportPost = false
+            this.reportUser = false
+            this.searchReport()
+        },
         searchReport(currentPage) {
+            if(this.reportUser || this.reportPost){
+                this.handleGetReport(this.selectedPostReport, this.selectedUserReport, currentPage)
+                return
+            }
             this.isShowLoader = true;
             if (currentPage == undefined || !currentPage) currentPage = 0;
             let reportRequestDTO = {
@@ -460,7 +475,7 @@
                 console.log(error);
             })
         },
-        handleGetReport(post, user) {
+        handleGetReport(post, user, currentPage) {
             this.isShowLoader = true;
             userTaskInstance.task = 11
             sessionStorage.setItem("task", 11)
@@ -469,18 +484,24 @@
             if (post != null) {
                 this.inputLandlordId = post.landlord.username
                 this.inputPostTitle = post.title
+                this.reportPost = true
+                this.selectedPostReport = post
             } else if (user != null) {
                 this.inputLandlordId = user.username
                 this.inputPostTitle = ""
+                this.reportUser = true
+                this.selectedUserReport = user
             }
-
+            if (currentPage == undefined || !currentPage) currentPage = 0;
             let reportRequestDTO = {
                 "landlordId": this.inputLandlordId == "" ? null : this.inputLandlordId,
                 "renterId": null,
                 "postTitle": this.inputPostTitle == "" ? null : this.inputPostTitle,
                 "statusReport": null,
+                "reportUser" : this.reportUser,
+                "reportPost" : this.reportPost,
             }
-            fetch("/search-report?currentPage=0", {
+            fetch("/search-report?currentPage=" + currentPage, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -489,15 +510,7 @@
             }).then(response => response.json())
                 .then((data) => {
                     if (data != null && data.code == "000") {
-                        let listReport = []
-                        for (let report of data.data.content) {
-                            if (post != null && (report.statusReport.id == 3 || report.statusReport.id == 5)) {
-                                listReport.push(report)
-                            } else if (user != null && (report.statusReport.id == 3 || report.statusReport.id == 4)) {
-                                listReport.push(report)
-                            }
-                        }
-                        this.listReport = listReport
+                        this.listReport = data.data.content
                         this.pagination = data.pagination
                         this.isShowLoader = false;
                     } else {
